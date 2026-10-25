@@ -1,0 +1,147 @@
+@import url("https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,200..800;1,6..72,200..800&display=swap");
+
+/* Geist Family */
+@font-face {
+	font-family: "Geist";
+	src: url("../assets/fonts/Geist-Light.woff2") format("woff2");
+	font-weight: 300;
+	font-style: normal;
+	font-display: swap;
+}
+
+@font-face {
+	font-family: "Geist";
+	src: url("../assets/fonts/Geist-Regular.woff2") format("woff2");
+	font-weight: 400;
+	font-style: normal;
+	font-display: swap;
+}
+
+@font-face {
+	font-family: "Geist";
+	src: url("../assets/fonts/Geist-Medium.woff2") format("woff2");
+	font-weight: 500;
+	font-style: normal;
+	font-display: swap;
+}
+
+@font-face {
+	font-family: "Geist";
+	src: url("../assets/fonts/Geist-SemiBold.woff2") format("woff2");
+	font-weight: 600;
+	font-style: normal;
+	font-display: swap;
+}
+
+/* PP Neue Montreal Family */
+@font-face {
+	font-family: "PP Neue Montreal";
+	src: url("../assets/fonts/ppneuemontreal-book.woff2") format("woff2");
+	font-weight: 400;
+	font-style: normal;
+	font-display: swap;
+}
+
+@font-face {
+	font-family: "PP Neue Montreal";
+	src: url("../assets/fonts/ppneuemontreal-medium.woff2") format("woff2");
+	font-weight: 500;
+	font-style: normal;
+	font-display: swap;
+}
+
+@font-face {
+	font-family: "PP Neue Montreal";
+	src: url("../assets/fonts/ppneuemontreal-bold.woff2") format("woff2");
+	font-weight: 700;
+	font-style: normal;
+	font-display: swap;
+}
+
+@import "tailwindcss";
+
+@theme {
+	--font-geist: "Geist", sans-serif;
+	--font-montreal: "PP Neue Montreal", sans-serif;
+
+	--color-sanora-blue-50: #f6f9ff;
+	--color-sanora-blue-100: #edf3ff;
+	--color-sanora-blue-200: #dce8ff;
+	--color-sanora-blue-300: #c4d8ff;
+	--color-sanora-blue-400: #9dbbff;
+	--color-sanora-blue-450: #5d7ab9;
+	--color-sanora-blue-500: #78a1ff;
+	--color-sanora-blue-600: #5a84ff;
+	--color-sanora-blue-700: #466ef2;
+	--color-sanora-blue-800: #3557cc;
+	--color-sanora-blue-900: #243b94;
+	--color-sanora-blue-950: #0129b0;
+	--color-sanora-neutral-0: #ffffff;
+	--color-sanora-neutral-25: #fcfbf7;
+	--color-sanora-neutral-50: #fafaf8;
+	--color-sanora-neutral-100: #f7f8fb;
+	--color-sanora-neutral-200: #eef2f8;
+	--color-sanora-neutral-300: #e2e8f0;
+	--color-sanora-neutral-400: #cbd5e1;
+	--color-sanora-neutral-500: #a9b1c0;
+	--color-sanora-neutral-600: #6e7687;
+	--color-sanora-neutral-700: #4b5565;
+	--color-sanora-neutral-800: #2a2f3a;
+	--color-sanora-neutral-900: #1111;
+	--color-sanora-dark: #090a0e;
+	--color-sanora-dark-surface: #111216;
+}
+
+*,
+*::before,
+*::after {
+	box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+}
+
+html {
+	scroll-behavior: smooth;
+	-webkit-text-size-adjust: 100%;
+}
+
+body {
+	min-height: 100vh;
+	line-height: 1.5;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+	overflow-x: hidden;
+}
+
+img,
+picture,
+video,
+canvas,
+svg {
+	display: block;
+	max-width: 100%;
+	height: auto;
+}
+
+input,
+button,
+textarea,
+select {
+	font: inherit;
+}
+
+button {
+	cursor: pointer;
+	border: none;
+	background: none;
+}
+
+a {
+	color: inherit;
+	text-decoration: none;
+}
+
+ul,
+ol {
+	list-style: none;
+}
