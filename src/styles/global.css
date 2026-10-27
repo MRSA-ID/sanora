@@ -64,6 +64,8 @@
 	--font-geist: "Geist", sans-serif;
 	--font-montreal: "PP Neue Montreal", sans-serif;
 
+	--text-big: clamp(3rem, 13.333vw, 12rem);
+
 	--color-sanora-blue-50: #f6f9ff;
 	--color-sanora-blue-100: #edf3ff;
 	--color-sanora-blue-200: #dce8ff;
@@ -145,3 +147,91 @@ ul,
 ol {
 	list-style: none;
 }
+
+/* preloader */
+/* Scroll Lock Utility for Active Preloader Phase */
+body.is-locked {
+	overflow: hidden !important;
+	touch-action: none;
+}
+
+.preloader-overlay {
+	@apply fixed inset-0 z-[9999] flex items-center justify-center p-8 md:p-14 bg-sanora-neutral-50 text-sanora-blue-950 font-montreal overflow-hidden;
+	contain: paint;
+}
+
+.preloader-center {
+	@apply flex flex-col items-center justify-center text-center;
+}
+
+/* Small 24px SVG Logo Dimensions (100x36 aspect ratio) */
+.logo-wrapper {
+	@apply relative w-[120px] h-[43px] sm:w-[160px] sm:h-[57px];
+}
+
+.outline-layer {
+	@apply absolute inset-0 w-full h-full pointer-events-none;
+}
+
+/* Mask Container for WebGL Shader Canvas */
+.shader-mask-wrapper {
+	@apply absolute inset-0 w-full h-full overflow-hidden;
+
+	/* Fully encoded 100x36 SVG mask for 24px text */
+	-webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 36'%3E%3Ctext x='50%25' y='50%25' dominant-baseline='central' text-anchor='middle' font-family='sans-serif' font-weight='400' font-size='24' letter-spacing='1' fill='black'%3ESNR%3C/text%3E%3C/svg%3E");
+	mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 36'%3E%3Ctext x='50%25' y='50%25' dominant-baseline='central' text-anchor='middle' font-family='sans-serif' font-weight='400' font-size='24' letter-spacing='1' fill='black'%3ESNR%3C/text%3E%3C/svg%3E");
+	-webkit-mask-size: 100% 100%;
+	mask-size: 100% 100%;
+	-webkit-mask-repeat: no-repeat;
+	mask-repeat: no-repeat;
+	-webkit-mask-position: center center;
+	mask-position: center center;
+}
+
+.bottom-label {
+	@apply flex flex-col text-center text-[14px] font-medium leading-[130%] text-sanora-blue-950 mt-1 opacity-90;
+}
+
+/* SplitText Container Masks */
+:global(.split-mask) {
+	@apply inline-block overflow-hidden align-bottom;
+}
+
+:global(.split-item) {
+	@apply inline-block;
+	will-change: transform, opacity, filter;
+}
+
+/* Debug Panel */
+.debug-panel {
+	@apply fixed bottom-5 right-5 z-[10000] bg-[#121218]/90 backdrop-blur-md border border-white/15 rounded-xl p-3.5 px-4 text-white font-sans flex flex-col gap-3 select-none shadow-2xl min-w-[260px];
+}
+
+.debug-header {
+	@apply text-xs uppercase tracking-widest text-slate-400 font-semibold;
+}
+
+.debug-scrubber {
+	@apply flex items-center gap-2 text-xs font-mono text-slate-300;
+}
+
+.debug-scrubber input[type="range"] {
+	@apply flex-1 accent-sky-400 cursor-pointer h-1.5 bg-white/20 rounded-lg;
+}
+
+.debug-actions {
+	@apply flex items-center gap-2.5;
+}
+
+.debug-btn {
+	@apply bg-white/10 border border-white/15 text-white py-1.5 px-3 rounded-md text-xs font-medium cursor-pointer transition-colors hover:bg-white/20;
+}
+
+.debug-btn.primary {
+	@apply bg-sky-400 text-slate-900 border-none hover:bg-sky-300;
+}
+
+.debug-toggle {
+	@apply flex items-center gap-1.5 text-xs text-slate-300 cursor-pointer ml-auto;
+}
+/* end preloader */

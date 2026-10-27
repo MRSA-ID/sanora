@@ -1,8 +1,19 @@
 ---
-import Welcome from '../components/Welcome.astro';
 import Layout from '../layouts/Layout.astro';
 ---
 
 <Layout>
-	<Welcome />
+	<div id="hero-container" class="hero-container relative bg-sanora-blue-950 w-full h-full z-10">
+		ini hero awal
+	</div>
+	<div  class="relative bg-sanora-blue-950 w-full h-full z-10">
+		ini hero awal
+	</div>
 </Layout>
+
+<style>
+  /* Hidden until GSAP triggers the slide-up animation */
+  .hero-container.invisible {
+    visibility: hidden;
+  }
+</style>
