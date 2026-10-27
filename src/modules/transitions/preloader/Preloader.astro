@@ -1,0 +1,68 @@
+---
+import GradientFill from '@components/GradientFill.jsx';
+---
+
+<div id="preloader" class="preloader-overlay">
+  <div class="preloader-center">
+    <div id="logo-wrapper" class="logo-wrapper">
+      <svg 
+        viewBox="0 0 100 36" 
+        class="outline-layer"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <text 
+          x="50%" 
+          y="50%" 
+          dominant-baseline="central" 
+          text-anchor="middle" 
+          font-family="var(--font-montreal), system-ui, sans-serif" 
+          font-weight="400" 
+          font-size="24" 
+          letter-spacing="1"
+          fill="none" 
+          stroke="var(--color-sanora-neutral-50)" 
+          stroke-width="1" 
+          opacity="0.25"
+        >
+          SNR
+        </text>
+      </svg>
+
+      <div id="shader-mask-container" class="shader-mask-wrapper">
+        <GradientFill client:only="react" />
+      </div>
+    </div>
+
+    <div class="bottom-label">
+      <div class="label-line split-words">Good experiences</div>
+      <div class="label-line split-words">start with good thinking.</div>
+    </div>
+  </div>
+</div>
+
+<!-- Floating Debug Control Panel -->
+<div id="debug-controls" class="debug-panel">
+  <div class="debug-header">Animation Debugger</div>
+  <div class="debug-scrubber">
+    <input type="range" id="progress-slider" min="0" max="100" value="0" step="0.1" />
+    <span id="progress-val">0%</span>
+  </div>
+  <div class="debug-actions">
+    <button id="btn-replay" class="debug-btn primary">Replay</button>
+    <button id="btn-toggle-play" class="debug-btn">Pause</button>
+    <label class="debug-toggle">
+      <input type="checkbox" id="toggle-loop" checked />
+      <span>Loop Animation</span>
+    </label>
+  </div>
+</div>
+
+<script>
+  import { initPreloaderControls } from "./preloader";
+
+  if (document.readyState === "complete" || document.readyState === "interactive") {
+    initPreloaderControls();
+  } else {
+    document.addEventListener("DOMContentLoaded", initPreloaderControls, { once: true });
+  }
+</script>
