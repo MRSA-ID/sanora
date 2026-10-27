@@ -65,6 +65,9 @@
 	--font-montreal: "PP Neue Montreal", sans-serif;
 
 	--text-big: clamp(3rem, 13.333vw, 12rem);
+	--text-hero-large: clamp(32px, 6.944vw, 120px);
+	/* clamp(1.5rem, 8.6vw, 7.75rem) 124px */
+	/* clamp(2rem, 6.5vw, 6rem) 96px */
 
 	--color-sanora-blue-50: #f6f9ff;
 	--color-sanora-blue-100: #edf3ff;
@@ -146,6 +149,10 @@ a {
 ul,
 ol {
 	list-style: none;
+}
+
+body {
+	@apply bg-sanora-neutral-50;
 }
 
 /* preloader */
@@ -235,3 +242,37 @@ body.is-locked {
 	@apply flex items-center gap-1.5 text-xs text-slate-300 cursor-pointer ml-auto;
 }
 /* end preloader */
+
+/* hero */
+.hero-container {
+	@apply bg-sanora-neutral-50 min-h-screen w-full mx-auto my-auto max-w-[1360px] flex flex-col justify-center items-center gap-10;
+}
+
+.hero-image {
+	@apply w-full rounded-[20px];
+}
+
+.hero-headline {
+	@apply text-sanora-blue-950 text-left justify-self-start w-full text-hero-large font-montreal font-bold leading-[110%];
+}
+
+.hero-bottom {
+	@apply flex w-full justify-between font-geist text-sanora-blue-950 font-medium;
+}
+
+.hero-bottom-left {
+	@apply leading-[100%] text-2xl;
+}
+
+.hero-bottom-right {
+	@apply text-end;
+}
+
+.hero-bottom-right > div:nth-child(0) {
+	@apply text-2xl leading-[100%];
+}
+.hero-bottom-right > div:nth-child(1) {
+	@apply text-xl leading-[100%];
+}
+
+/* end hero */
