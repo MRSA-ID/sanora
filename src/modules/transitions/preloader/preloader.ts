@@ -1,7 +1,8 @@
+// src/modules/transitions/preloader.ts
 import { gsap } from "gsap";
 
 let mainTl: gsap.core.Timeline | null = null;
-let isLooping = true;
+let isLooping = false;
 
 function setScrollLocked(isLocked: boolean) {
 	if (isLocked) {
@@ -11,7 +12,7 @@ function setScrollLocked(isLocked: boolean) {
 	}
 }
 
-function splitTextToMasks(selector: string) {
+export function splitTextToMasks(selector: string) {
 	const elements = document.querySelectorAll<HTMLElement>(selector);
 
 	elements.forEach((el) => {
@@ -45,6 +46,8 @@ export function resetAnimationState() {
 	if (!preloader || !shaderContainer || !logoWrapper) return;
 
 	setScrollLocked(true);
+
+	// Split bottom label & hero text into mask wrappers
 	splitTextToMasks(".split-words");
 
 	preloader.style.display = "flex";
@@ -66,9 +69,31 @@ export function resetAnimationState() {
 		filter: "blur(8px)",
 	});
 
+	// Set initial hidden state for Hero elements
 	if (heroContainer) {
-		gsap.set(heroContainer, { yPercent: 100, visibility: "visible" });
-		gsap.set(".hero-reveal", { opacity: 0, y: 30 });
+		gsap.set(heroContainer, { yPercent: 0, visibility: "visible" });
+
+		// Hidden state for Hero Headline
+		gsap.set(".hero-headline", {
+			opacity: 0,
+			y: 40,
+			filter: "blur(12px)",
+		});
+
+		// Hidden state for Hero Image
+		gsap.set(".hero-image", {
+			opacity: 0,
+			scale: 0.95,
+			y: 30,
+			filter: "blur(10px)",
+		});
+
+		// Hidden state for Hero Bottom split text
+		gsap.set(".hero-bottom .split-item", {
+			yPercent: 120,
+			opacity: 0,
+			filter: "blur(8px)",
+		});
 	}
 }
 
@@ -78,18 +103,16 @@ export function runPreloaderAnimation() {
 	resetAnimationState();
 
 	const preloader = document.getElementById("preloader");
-	const heroContainer = document.getElementById("hero-container");
 	const shaderContainer = document.getElementById("shader-mask-container");
 	const logoWrapper = document.getElementById("logo-wrapper");
 	const slider = document.getElementById(
 		"progress-slider",
 	) as HTMLInputElement | null;
 	const progressVal = document.getElementById("progress-val");
-	const btnTogglePlay = document.getElementById("btn-toggle-play");
 
 	if (!preloader || !shaderContainer || !logoWrapper) return;
 
-	const fillDuration = 5.0;
+	const fillDuration = 4.0;
 
 	mainTl = gsap.timeline({
 		onUpdate: () => {
@@ -104,17 +127,14 @@ export function runPreloaderAnimation() {
 		},
 		onComplete: () => {
 			setScrollLocked(false);
-
-			if (isLooping) {
-				gsap.delayedCall(0.8, runPreloaderAnimation);
-			} else {
+			if (!isLooping) {
 				preloader.style.display = "none";
 			}
 		},
 	});
 
-	// 1. Slowmotion Fill: inset(100%) -> inset(0%) over 5.0s
 	mainTl
+		// 1. Fill Shader Gradient
 		.to(
 			shaderContainer,
 			{
@@ -124,7 +144,7 @@ export function runPreloaderAnimation() {
 			},
 			0,
 		)
-		// 2. Reveal subtitle text when fill hits 90% progress
+		// 2. Preloader Subtitle reveal
 		.to(
 			".bottom-label .split-item",
 			{
@@ -135,20 +155,19 @@ export function runPreloaderAnimation() {
 				stagger: 0.06,
 				ease: "power3.out",
 			},
-			fillDuration * 0.9,
+			fillDuration * 0.85,
 		)
-		// 3. Pause briefly at 100% full text fill
-		.to({}, { duration: 0.5 })
-		// 4. Stagger exit for subtitle text
+		.to({}, { duration: 0.4 })
+		// 3. Preloader Subtitle exit
 		.to(".bottom-label .split-item", {
 			yPercent: -125,
 			opacity: 0,
 			filter: "blur(6px)",
-			duration: 0.5,
+			duration: 0.4,
 			stagger: 0.02,
 			ease: "power2.in",
 		})
-		// 5. Blur & scale exit for SNR logo
+		// 4. Logo Exit
 		.to(
 			logoWrapper,
 			{
@@ -156,44 +175,63 @@ export function runPreloaderAnimation() {
 				filter: "blur(12px)",
 				scale: 0.92,
 				y: -15,
-				duration: 0.6,
+				duration: 0.5,
 				ease: "power2.in",
 			},
 			"<",
 		)
-		// 6. Swipe up Preloader & reveal Hero container
+		// 5. Preloader Curtain Swipe Up
 		.to(
 			preloader,
 			{
 				yPercent: -100,
-				duration: 1.2,
+				duration: 1.1,
 				ease: "power4.inOut",
 			},
-			"-=0.2",
+			"-=0.1",
 		)
+
+		// --- HERO REVEAL SEQUENCE (with slight delay) ---
+		// 6. Reveal Hero Headline with blur & split position
 		.to(
-			heroContainer,
-			{
-				yPercent: 0,
-				duration: 1.2,
-				ease: "power4.inOut",
-			},
-			"<",
-		)
-		// 7. Reveal hero elements
-		.to(
-			".hero-reveal",
+			".hero-headline",
 			{
 				opacity: 1,
 				y: 0,
-				duration: 0.85,
-				stagger: 0.09,
+				filter: "blur(0px)",
+				duration: 1.0,
 				ease: "power3.out",
 			},
-			"-=0.5",
-		);
+			"+=0.15",
+		)
 
-	if (btnTogglePlay) btnTogglePlay.textContent = "Pause";
+		// 7. Reveal Hero Image with scale & blur
+		.to(
+			".hero-image",
+			{
+				opacity: 1,
+				scale: 1,
+				y: 0,
+				filter: "blur(0px)",
+				duration: 1.1,
+				ease: "power3.out",
+			},
+			"-=0.7",
+		)
+
+		// 8. Reveal Hero Bottom split text lines
+		.to(
+			".hero-bottom .split-item",
+			{
+				yPercent: 0,
+				opacity: 1,
+				filter: "blur(0px)",
+				duration: 0.85,
+				stagger: 0.04,
+				ease: "power3.out",
+			},
+			"-=0.8",
+		);
 }
 
 export function initPreloaderControls() {
