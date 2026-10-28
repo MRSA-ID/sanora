@@ -1,0 +1,44 @@
+---
+// src/components/Hero.astro
+import "@styles/global.css";
+import HeroImageBlack from "@/assets/image/cinematic.png";
+import HeroHeadline from "@/components/HeroHeadline";
+import DitherVeil from "@/components/ui/dither-veil";
+---
+
+<section id="hero-container" class="hero-container">
+  <h1 class="hero-headline hero-reveal-text">
+    <HeroHeadline client:load />
+  </h1>
+
+  <!-- Interactive DitherVeil WebGL Hero Container -->
+  <div class="hero-image hero-reveal-img ">
+    <DitherVeil
+      client:only="react"
+      src={HeroImageBlack.src}
+      fit="cover"
+      pattern="bayer"
+      pixelSize={2}
+      inkColor="#0129b0"
+      paperColor="#fafaf8"
+      revealRadius={220}
+      softness={0.6}
+      linger={1.2}
+      rimColor="#0129b0"
+      rim={0}
+      wander={false}
+      clickBurst={true}
+    />
+  </div>
+
+  <div class="hero-bottom">
+    <div class="hero-bottom-left">
+      <div class="label-line split-words">I create solution based on the</div>
+      <div class="label-line split-words">client’s real needs</div>
+    </div>
+    <div class="hero-bottom-right">
+      <div class="label-line split-words">INDONESIA / 2026</div>
+      <div class="label-line split-words">sanggisda@gmail.com</div>
+    </div>
+  </div>
+</section>
