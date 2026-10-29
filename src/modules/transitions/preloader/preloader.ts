@@ -5,10 +5,13 @@ let mainTl: gsap.core.Timeline | null = null;
 let isLooping = false;
 
 function setScrollLocked(isLocked: boolean) {
+	const lenis = (window as any).lenis;
 	if (isLocked) {
 		document.body.classList.add("is-locked");
+		if (lenis) lenis.stop();
 	} else {
 		document.body.classList.remove("is-locked");
+		if (lenis) lenis.start();
 	}
 }
 

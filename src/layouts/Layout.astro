@@ -1,7 +1,8 @@
 ---
+// src/layouts/Layout.astro
 import FloatingMenu from "@/components/ui/liquid-morph-floating-menu.tsx";
 import Preloader from "../modules/transitions/preloader/Preloader.astro";
-import "../styles/global.css";
+import "@styles/global.css";
 ---
 
 <!doctype html>
@@ -12,22 +13,97 @@ import "../styles/global.css";
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<link rel="icon" href="/favicon.ico" />
 		<meta name="generator" content={Astro.generator} />
-		<title>Astro Basics</title>
+		<title>Sanora — Portfolio</title>
 	</head>
 	<body>
 		<!-- <Preloader /> -->
-			<FloatingMenu client:load />
-			<main class="">
-				<slot />
-			</main>
+		<FloatingMenu client:load />
+		<main id="main-content">
+			<slot />
+		</main>
+
+		<script>
+			import Lenis from "lenis";
+			import { gsap } from "gsap";
+			import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+			gsap.registerPlugin(ScrollTrigger);
+
+			// Initialize Lenis Smooth Scroll
+			const lenis = new Lenis({
+				duration: 1.2,
+				easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), // Smooth exponential ease
+				smoothWheel: true,
+				wheelMultiplier: 1.0,
+				touchMultiplier: 1.5,
+			});
+
+			// Synchronize Lenis scroll positions with GSAP ScrollTrigger
+			lenis.on("scroll", ScrollTrigger.update);
+
+			// Feed Lenis requestAnimationFrame time into GSAP Ticker
+			gsap.ticker.add((time) => {
+				lenis.raf(time * 1000);
+			});
+
+			// Disable GSAP lag smoothing to keep scroll animations fluid
+			gsap.ticker.lagSmoothing(0);
+
+			// Make lenis globally available if needed by other components
+			(window as any).lenis = lenis;
+
+			// Setup Section Parallax Effect
+			document.addEventListener("DOMContentLoaded", () => {
+				// Select sections that should have parallax depth
+				const parallaxSections = document.querySelectorAll(".parallax-section");
+
+				parallaxSections.forEach((section) => {
+					const innerContent = section.querySelector(".parallax-inner") || section;
+					
+					gsap.fromTo(
+						innerContent,
+						{ y: -50 },
+						{
+							y: 50,
+							ease: "none",
+							scrollTrigger: {
+								trigger: section,
+								start: "top bottom",
+								end: "bottom top",
+								scrub: true,
+							},
+						}
+					);
+				});
+			});
+		</script>
 	</body>
 </html>
 
 <style>
-	html,
-	body {
-		margin: 0;
-		width: 100%;
-		height: 100%;
+	html {
+		/* Lenis required smooth scroll root styles */
+		scroll-behavior: initial;
+	}
+
+	html.lenis,
+	html.lenis body {
+		height: auto;
+	}
+
+	.lenis.lenis-smooth {
+		scroll-behavior: auto !important;
+	}
+
+	.lenis.lenis-smooth [data-lenis-prevent] {
+		overscroll-behavior: contain;
+	}
+
+	.lenis.lenis-stopped {
+		overflow: hidden;
+	}
+
+	.lenis.lenis-scrolling iframe {
+		pointer-events: none;
 	}
 </style>
