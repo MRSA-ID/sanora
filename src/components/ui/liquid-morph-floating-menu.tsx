@@ -6,6 +6,7 @@ import { motion } from "motion/react";
 import { MenuToggle } from "./menu-toggle";
 
 const ease = [0.22, 1, 0.36, 1] as const;
+const slowEase = [0.16, 1, 0.3, 1] as const;
 
 export interface MenuItem {
 	label: string;
@@ -78,16 +79,16 @@ function MenuButton({
 						key={i}
 						className="inline-block overflow-hidden text-[28px] md:text-[32px] font-medium leading-[1.1]"
 						style={{ height: "1.1em" }}
-						initial={{ opacity: 0, y: 12, filter: "blur(6px)" }}
+						initial={{ opacity: 0, y: 16, filter: "blur(8px)" }}
 						animate={{
 							opacity: isOpen ? 1 : 0,
-							y: isOpen ? 0 : 12,
-							filter: isOpen ? "blur(0px)" : "blur(6px)",
+							y: isOpen ? 0 : 16,
+							filter: isOpen ? "blur(0px)" : "blur(8px)",
 						}}
 						transition={{
-							duration: 0.45,
-							delay: isOpen ? 0.3 + 0.06 * index + 0.025 * i : 0,
-							ease,
+							duration: 0.75,
+							delay: isOpen ? 0.45 + 0.08 * index + 0.035 * i : 0,
+							ease: slowEase,
 						}}>
 						<span
 							className="flex flex-col"
@@ -174,16 +175,16 @@ function SocialLink({
 						key={i}
 						className="inline-block overflow-hidden text-[13px] md:text-[14px] font-normal leading-[1.1]"
 						style={{ height: "1.1em" }}
-						initial={{ opacity: 0, y: 8, filter: "blur(4px)" }}
+						initial={{ opacity: 0, y: 12, filter: "blur(6px)" }}
 						animate={{
 							opacity: isOpen ? 1 : 0,
-							y: isOpen ? 0 : 8,
-							filter: isOpen ? "blur(0px)" : "blur(4px)",
+							y: isOpen ? 0 : 12,
+							filter: isOpen ? "blur(0px)" : "blur(6px)",
 						}}
 						transition={{
-							duration: 0.4,
-							delay: isOpen ? 0.55 + 0.04 * index + 0.02 * i : 0,
-							ease,
+							duration: 0.65,
+							delay: isOpen ? 0.8 + 0.06 * index + 0.03 * i : 0,
+							ease: slowEase,
 						}}>
 						<span
 							className="flex flex-col"
@@ -258,9 +259,9 @@ export default function FloatingMenu({ items, socials }: FloatingMenuProps) {
 			ref={containerRef}
 			className="fixed top-4 left-1/2 z-[100]"
 			style={{ x: "-50%", pointerEvents: "auto" }}
-			initial={{ opacity: 0, y: -20 }}
-			animate={{ opacity: 1, y: 0 }}
-			transition={{ duration: 0.4, ease }}>
+			initial={{ opacity: 0, y: -32, filter: "blur(12px)" }}
+			animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+			transition={{ duration: 1.4, delay: 0.6, ease: slowEase }}>
 			<motion.div
 				className="relative overflow-hidden flex flex-col shadow-2xl backdrop-blur-xl"
 				onClick={() => {
@@ -281,12 +282,13 @@ export default function FloatingMenu({ items, socials }: FloatingMenuProps) {
 				transition={{
 					duration: 0.8,
 					ease,
-					height: { duration: isOpen ? 0.8 : 0.15 },
+					height: { duration: isOpen ? 0.8 : 0.4, ease },
+					width: { duration: isOpen ? 0.8 : 0.4, ease },
 					scale: { duration: 0.25, ease },
 				}}>
 				{/* Neutral-50 background layer */}
 				<motion.div
-					className="absolute inset-0 bg-sanora-neutral-50/30 border border-sanora-blue-950/5 backdrop-blur-lg"
+					className="absolute inset-0 bg-sanora-neutral-50 border border-sanora-blue-950/5"
 					animate={{
 						borderColor: isOpen
 							? "rgba(1, 41, 176, 0.4)"
@@ -350,19 +352,23 @@ export default function FloatingMenu({ items, socials }: FloatingMenuProps) {
 					animate={{
 						opacity: isOpen ? 1 : 0,
 					}}
-					transition={{ duration: 0.3 }}
+					transition={{ duration: isOpen ? 0.4 : 0.15 }}
 					style={{
 						pointerEvents: isOpen ? "auto" : "none",
 					}}>
 					<div className="flex flex-col gap-4 items-start w-full">
 						<motion.hr
-							className="border-[0.5px] border-sanora-blue-450 w-full mt-2!"
+							className="border-[0.5] border-sanora-blue-450 w-full mt-2!"
 							initial={{ opacity: 0, scaleX: 0 }}
 							animate={{
 								opacity: isOpen ? 1 : 0,
 								scaleX: isOpen ? 1 : 0,
 							}}
-							transition={{ duration: 0.4, delay: isOpen ? 0.25 : 0 }}
+							transition={{
+								duration: 0.6,
+								delay: isOpen ? 0.35 : 0,
+								ease: slowEase,
+							}}
 							style={{ originX: 0 }}
 						/>
 						{menuItems.map((item, idx) => (
@@ -380,7 +386,21 @@ export default function FloatingMenu({ items, socials }: FloatingMenuProps) {
 					</div>
 
 					{/* Social Links Row */}
-					<div className="flex flex-col gap-2 w-full pt-3! border-t border-sanora-blue-450">
+					<div className="flex flex-col gap-2 w-full pt-3! ">
+						<motion.hr
+							className="border-[0.5] border-sanora-blue-450 w-full mt-2!"
+							initial={{ opacity: 0, scaleX: 0 }}
+							animate={{
+								opacity: isOpen ? 1 : 0,
+								scaleX: isOpen ? 1 : 0,
+							}}
+							transition={{
+								duration: 0.6,
+								delay: isOpen ? 0.35 : 0,
+								ease: slowEase,
+							}}
+							style={{ originX: 0 }}
+						/>
 						<div className="flex items-center justify-between w-full">
 							{socialItems.map((soc, idx) => (
 								<SocialLink
