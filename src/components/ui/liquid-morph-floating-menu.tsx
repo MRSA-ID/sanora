@@ -312,7 +312,7 @@ export default function FloatingMenu({ items, socials }: FloatingMenuProps) {
 					transition={{ duration: 0.8, ease }}
 					style={{ alignItems: "center" }}>
 					<motion.span
-						className="text-[14px] md:text-[24px] font-medium leading-none tracking-wider select-none"
+						className="text-[20px] font-medium leading-none tracking-wider select-none"
 						animate={{ color: isOpen ? "#fafaf8" : "#0129b0" }}
 						transition={{ duration: 0.3, ease }}>
 						Sanora
