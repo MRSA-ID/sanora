@@ -1,0 +1,236 @@
+---
+// src/components/About.astro
+import RadialGlow from "@components/RadialGlow.astro";
+import Aws from "@assets/logo/aws.svg";
+import Bnsp from "@assets/logo/bnsp.svg";
+import Cisco from "@assets/logo/cisco.svg";
+import Dicoding from "@assets/logo/dicoding.svg";
+import Digitalent from "@assets/logo/digitalent.svg";
+import Freecodecamp from "@assets/logo/freecodecamp.svg";
+import Hacktive8 from "@assets/logo/hacktive8.svg";
+import Komdigi from "@assets/logo/komdigi.svg";
+import progate from "@assets/logo/progate.svg";
+import Shoope from "@assets/logo/shoope.svg";
+import CV from "@assets/Software Engineer CV.pdf";
+
+const logos = [
+  { name: "AWS", src: Aws },
+  { name: "BNSP", src: Bnsp },
+  { name: "Cisco", src: Cisco },
+  { name: "Dicoding", src: Dicoding },
+  { name: "Digitalent", src: Digitalent },
+  { name: "freeCodeCamp", src: Freecodecamp },
+  { name: "Hacktiv8", src: Hacktive8 },
+  { name: "Komdigi", src: Komdigi },
+  { name: "Progate", src: progate },
+  { name: "Shopee", src: Shoope },
+];
+
+// Helper to split text into character spans
+const splitText = (text: string) => {
+  return text.split("").map((char) => (char === " " ? "\u00A0" : char));
+};
+
+const line1Chars = splitText("Building thoughtful");
+const line2Chars = splitText("digital experiences.");
+const identityChars = splitText("01 / IDENTITY");
+const buttonChars = splitText("About me");
+---
+
+<section id="about-container" class="about-container">
+  
+  <!-- Step 1a: Left Radial Glow -->
+  <div class="glow-layer-left">
+    <RadialGlow size={1500} variant="left" />
+  </div>
+
+  <!-- Step 1b: Right Radial Glow -->
+  <div class="glow-layer-right">
+    <RadialGlow
+      size={1500}
+      reversed={true}
+      radialStops="circle at 60% 10%, #2388FF 36%, #E9F3FF 61%"
+      variant="right"
+    />
+  </div>
+
+  <!-- Glassmorphic White Container Layer with Backdrop Blur -->
+  <div class="glassmorphic-container">
+    
+    <div class="flex flex-col gap-8 justify-center items-center text-center">
+      <!-- Step 2: text span "01 / IDENTITY" -->
+      <span class="reveal-identity about-label">
+        {identityChars.map((char) => (
+          <span class="char inline-block opacity-0 blur-[10px] translate-y-4">{char}</span>
+        ))}
+      </span>
+
+      <h1 class="about-headline">
+        <!-- Step 3: text h1 "Building thoughtful" -->
+        <p class="reveal-line1 inline-flex overflow-hidden">
+          {line1Chars.map((char) => (
+            <span class="char inline-block opacity-0 blur-[12px] translate-y-8">{char}</span>
+          ))}
+        </p>
+
+        <!-- Step 4: text h1 "digital experiences." -->
+        <p class="reveal-line2 inline-flex overflow-hidden">
+          {line2Chars.map((char) => (
+            <span class="char inline-block opacity-0 blur-[12px] translate-y-8">{char}</span>
+          ))}
+        </p>
+      </h1>
+    </div>
+    
+    <!-- Step 5: Minimal & Natural Click/Hover Interactive Button for Download CV -->
+    <a
+      href={CV}
+      download="Software Engineer CV.pdf"
+      id="cv-download-btn"
+      class="reveal-btn about-download-btn group"
+    >
+      <span class="flex justify-start items-center overflow-hidden">
+        {buttonChars.map((char, i) => (
+          <span
+            class="inline-block overflow-hidden"
+            style={{ height: "1.1em" }}
+          >
+            <span
+              class="flex flex-col transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:-translate-y-1/2"
+              style={{ transitionDelay: `${30 * i}ms` }}
+            >
+              <span class="block text-left" style={{ height: "1.1em", lineHeight: "1.1em" }}>
+                {char}
+              </span>
+              <span class="block text-left" style={{ height: "1.1em", lineHeight: "1.1em" }} aria-hidden="true">
+                {char}
+              </span>
+            </span>
+          </span>
+        ))}
+      </span>
+    </a>
+
+    <!-- Step 6: list logo -->
+    <div class="reveal-logos about-list-logo-container">
+      <div class="flex w-max gap-8 sm:gap-12 md:gap-16 items-center animate-marquee">
+        <!-- Primary Loop -->
+        {logos.map((logo) => (
+          <div class="flex items-center justify-center shrink-0 h-8 sm:h-10 md:h-12 opacity-80 hover:opacity-100 transition-opacity">
+            <img src={logo.src.src} alt={logo.name} class="h-full w-auto object-contain" />
+          </div>
+        ))}
+        <!-- Duplicated Loop for Seamless Scroll -->
+        {logos.map((logo) => (
+          <div class="flex items-center justify-center shrink-0 h-8 sm:h-10 md:h-12 opacity-80 hover:opacity-100 transition-opacity" aria-hidden="true">
+            <img src={logo.src.src} alt={logo.name} class="h-full w-auto object-contain" />
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+
+</section>
+
+<script>
+  import { gsap } from "gsap";
+  import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+  gsap.registerPlugin(ScrollTrigger);
+
+  document.addEventListener("DOMContentLoaded", () => {
+    const section = document.getElementById("about-container");
+    if (!section) return;
+
+    // Timeline Scroll Reveal
+    const tl = gsap.timeline({
+      scrollTrigger: {
+        trigger: section,
+        start: "top 80%",
+      },
+    });
+
+    tl
+      // 1a. Left RadialGlow
+      .to(".glow-layer-left", {
+        opacity: 1,
+        scale: 1,
+        filter: "blur(0px)",
+        duration: 2.2,
+        ease: "power3.out",
+      })
+
+      // 1b. Right RadialGlow
+      .to(".glow-layer-right", {
+        opacity: 1,
+        scale: 1,
+        filter: "blur(0px)",
+        duration: 2.2,
+        ease: "power3.out",
+      }, "-=1.5")
+
+      // 2. text span "01 / IDENTITY"
+      .to(".reveal-identity .char", {
+        opacity: 1,
+        y: 0,
+        filter: "blur(0px)",
+        stagger: 0.035,
+        duration: 0.9,
+        ease: "power3.out",
+      }, "-=1.2")
+
+      // 3. text h1 "Building thoughtful"
+      .to(".reveal-line1 .char", {
+        opacity: 1,
+        y: 0,
+        filter: "blur(0px)",
+        stagger: 0.04,
+        duration: 1.1,
+        ease: "power3.out",
+      }, "-=0.6")
+
+      // 4. text h1 "digital experiences."
+      .to(".reveal-line2 .char", {
+        opacity: 1,
+        y: 0,
+        filter: "blur(0px)",
+        stagger: 0.04,
+        duration: 1.1,
+        ease: "power3.out",
+      }, "-=0.8")
+
+      // 5. button "About me"
+      .to(".reveal-btn", {
+        opacity: 1,
+        y: 0,
+        filter: "blur(0px)",
+        duration: 1.0,
+        ease: "power2.out",
+      }, "-=0.5")
+
+      // 6. list logo
+      .to(".reveal-logos", {
+        opacity: 1,
+        y: 0,
+        filter: "blur(0px)",
+        duration: 1.3,
+        ease: "power2.out",
+      }, "-=0.6");
+  });
+</script>
+
+<style>
+  @keyframes marquee {
+    0% {
+      transform: translateX(0%);
+    }
+    100% {
+      transform: translateX(-50%);
+    }
+  }
+
+  .animate-marquee {
+    animation: marquee 25s linear infinite;
+    will-change: transform;
+  }
+</style>

@@ -2,7 +2,7 @@
 // src/components/RadialGlow.astro
 interface Props {
   className?: string;
-  size?: number; // base container size in px
+  size?: number; // base target size in px on desktop
   reversed?: boolean;
   radialStops?: string;
   variant?: "left" | "right";
@@ -23,20 +23,23 @@ const animClass = variant === "left" ? "animate-random-left" : "animate-random-r
 
 <div
   class:list={[
-    "relative flex items-center justify-center overflow-visible pointer-events-none select-none blur-[10px]",
+    "relative flex items-center justify-center overflow-visible pointer-events-none select-none blur-[10px] aspect-square w-full max-lg:w-screen max-lg:max-w-none",
     animClass,
     className
   ]}
-  style={{ width: `${size}px`, height: `${size}px` }}
+  style={{
+    maxWidth: `${size}px`,
+    maxHeight: `${size}px`,
+  }}
 >
   <!-- Outer Soft Glow (Layer Blur 200px equivalent) -->
   <div
-    class="absolute rounded-full w-[65%] h-[65%] bg-[#E9F3FF] opacity-90 blur-[100px] md:blur-[160px] transform animate-pulse-glow"
+    class="absolute rounded-full w-[85%] h-[85%] lg:w-[65%] lg:h-[65%] bg-sanora-blue-200 opacity-90 blur-[50px] sm:blur-[100px] md:blur-[160px] transform animate-pulse-glow"
     style={{ transform: `rotate(${outerRotation})` }}
   ></div>
 
   <div
-    class="absolute z-[1] rounded-full w-[65%] h-[65%] bg-[#E9F3FF] blur-[100px] transform animate-pulse-glow-delayed"
+    class="absolute z-[1] rounded-full w-[85%] h-[85%] lg:w-[65%] lg:h-[65%] bg-sanora-blue-200 blur-[50px] sm:blur-[100px] transform animate-pulse-glow-delayed"
     style={{ transform: `rotate(${outerRotation})` }}
   ></div>
 
