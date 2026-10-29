@@ -1,44 +1,106 @@
 ---
-// src/components/Hero.astro
+// src/components/sections/Hero.astro
 import "@styles/global.css";
 import HeroImageBlack from "@/assets/image/cinematic.png";
 import HeroHeadline from "@/components/HeroHeadline";
 import DitherVeil from "@/components/ui/dither-veil";
 ---
 
-<section id="hero-container" class="hero-container">
-  <h1 class="hero-headline hero-reveal-text">
-    <HeroHeadline client:load />
-  </h1>
+<section id="hero-container" class="hero-container relative z-0 w-full min-h-screen">
+  <div class="hero-inner w-full flex flex-col items-center gap-6 sm:gap-8 lg:gap-10">
+    <!-- Headline -->
+    <h1 class="hero-headline hero-reveal-text">
+      <HeroHeadline client:load />
+    </h1>
 
-  <!-- Interactive DitherVeil WebGL Hero Container -->
-  <div class="hero-image hero-reveal-img ">
-    <DitherVeil
-      client:only="react"
-      src={HeroImageBlack.src}
-      fit="cover"
-      pattern="bayer"
-      pixelSize={2}
-      inkColor="#0129b0"
-      paperColor="#fafaf8"
-      revealRadius={220}
-      softness={0.6}
-      linger={1.2}
-      rimColor="#0129b0"
-      rim={0}
-      wander={false}
-      clickBurst={true}
-    />
-  </div>
-
-  <div class="hero-bottom">
-    <div class="hero-bottom-left">
-      <div class="label-line split-words">I create solution based on the</div>
-      <div class="label-line split-words">client’s real needs</div>
+    <!-- Interactive DitherVeil WebGL Container -->
+    <div class="hero-image hero-reveal-img">
+      <DitherVeil
+        client:only="react"
+        src={HeroImageBlack.src}
+        fit="cover"
+        pattern="bayer"
+        pixelSize={2}
+        inkColor="#0129b0"
+        paperColor="#fafaf8"
+        revealRadius={220}
+        softness={0.6}
+        linger={1.2}
+        rimColor="#0129b0"
+        rim={0}
+        wander={false}
+        clickBurst={true}
+      />
     </div>
-    <div class="hero-bottom-right">
-      <div class="label-line split-words">INDONESIA / 2026</div>
-      <div class="label-line split-words">sanggisda@gmail.com</div>
+
+    <!-- Bottom Meta -->
+    <div class="hero-bottom">
+      <div class="hero-bottom-left">
+        <div class="label-line split-words">I create solution based on the</div>
+        <div class="label-line split-words">client’s real needs</div>
+      </div>
+      <div class="hero-bottom-right">
+        <div class="label-line split-words">INDONESIA / 2026</div>
+        <div class="label-line split-words">sanggisda@gmail.com</div>
+      </div>
     </div>
   </div>
 </section>
+
+<script>
+  import { gsap } from "gsap";
+  import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+  gsap.registerPlugin(ScrollTrigger);
+
+  document.addEventListener("DOMContentLoaded", () => {
+    const heroSection = document.getElementById("hero-container");
+    if (!heroSection) return;
+
+    // Single unified timeline: Pins Hero and scrubs internal drift + blur
+    const heroTl = gsap.timeline({
+      scrollTrigger: {
+        trigger: heroSection,
+        start: "top top",
+        end: "+=100%", // Hold pin for exactly 1 viewport height of scroll
+        pin: true,
+        pinSpacing: false, // Allows About section to slide continuously over Hero with no gap
+        scrub: true,
+        invalidateOnRefresh: true,
+      },
+    });
+
+    heroTl
+      .to(
+        ".hero-headline",
+        {
+          y: -180,
+          opacity: 0,
+          filter: "blur(20px)",
+          ease: "none",
+        },
+        0
+      )
+      .to(
+        ".hero-image",
+        {
+          y: -100,
+          scale: 0.92,
+          opacity: 0,
+          filter: "blur(14px)",
+          ease: "none",
+        },
+        0
+      )
+      .to(
+        ".hero-bottom",
+        {
+          y: -120,
+          opacity: 0,
+          filter: "blur(10px)",
+          ease: "none",
+        },
+        0
+      );
+  });
+</script>
