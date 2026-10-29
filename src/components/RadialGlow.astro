@@ -1,0 +1,121 @@
+---
+// src/components/RadialGlow.astro
+interface Props {
+  className?: string;
+  size?: number; // base container size in px
+  reversed?: boolean;
+  radialStops?: string;
+  variant?: "left" | "right";
+}
+
+const {
+  className = "",
+  size = 600,
+  reversed = false,
+  radialStops = "circle at 45% 100%, #2388FF 31%, #E9F3FF 74%",
+  variant = "left",
+} = Astro.props;
+
+const rotationDegree = reversed ? "180deg" : "-61.98deg";
+const outerRotation = reversed ? "-28.02deg" : "28.02deg";
+const animClass = variant === "left" ? "animate-random-left" : "animate-random-right";
+---
+
+<div
+  class:list={[
+    "relative flex items-center justify-center overflow-visible pointer-events-none select-none blur-[10px]",
+    animClass,
+    className
+  ]}
+  style={{ width: `${size}px`, height: `${size}px` }}
+>
+  <!-- Outer Soft Glow (Layer Blur 200px equivalent) -->
+  <div
+    class="absolute rounded-full w-[65%] h-[65%] bg-[#E9F3FF] opacity-90 blur-[100px] md:blur-[160px] transform animate-pulse-glow"
+    style={{ transform: `rotate(${outerRotation})` }}
+  ></div>
+
+  <div
+    class="absolute z-[1] rounded-full w-[65%] h-[65%] bg-[#E9F3FF] blur-[100px] transform animate-pulse-glow-delayed"
+    style={{ transform: `rotate(${outerRotation})` }}
+  ></div>
+
+  <!-- Main Radial Gradient Orb with Inner Shadow & Rotation -->
+  <div
+    class="absolute inset-0 rounded-full shadow-[inset_0px_3px_49px_#E9F3FF]"
+    style={{
+      transform: `rotate(${rotationDegree})`,
+      background: `radial-gradient(${radialStops})`,
+    }}
+  ></div>
+</div>
+
+<style>
+  /* Organic floating movement for Left Glow */
+  @keyframes randomFloatLeft {
+    0% {
+      transform: translate(0px, 0px) scale(1) rotate(0deg);
+    }
+    25% {
+      transform: translate(40px, 35px) scale(1.05) rotate(4deg);
+    }
+    50% {
+      transform: translate(-30px, 50px) scale(0.96) rotate(-3deg);
+    }
+    75% {
+      transform: translate(25px, -20px) scale(1.03) rotate(2deg);
+    }
+    100% {
+      transform: translate(0px, 0px) scale(1) rotate(0deg);
+    }
+  }
+
+  /* Independent floating movement for Right Glow */
+  @keyframes randomFloatRight {
+    0% {
+      transform: translate(0px, 0px) scale(1) rotate(0deg);
+    }
+    25% {
+      transform: translate(-45px, -30px) scale(0.95) rotate(-5deg);
+    }
+    50% {
+      transform: translate(30px, 40px) scale(1.06) rotate(3deg);
+    }
+    75% {
+      transform: translate(-20px, 25px) scale(0.98) rotate(-2deg);
+    }
+    100% {
+      transform: translate(0px, 0px) scale(1) rotate(0deg);
+    }
+  }
+
+  /* Soft Ambient Pulse for Inner Blur Layers */
+  @keyframes pulseGlow {
+    0%, 100% {
+      opacity: 0.85;
+      filter: blur(100px);
+    }
+    50% {
+      opacity: 1;
+      filter: blur(130px);
+    }
+  }
+
+  .animate-random-left {
+    animation: randomFloatLeft 18s ease-in-out infinite;
+    will-change: transform;
+  }
+
+  .animate-random-right {
+    animation: randomFloatRight 22s ease-in-out infinite;
+    will-change: transform;
+  }
+
+  .animate-pulse-glow {
+    animation: pulseGlow 8s ease-in-out infinite;
+  }
+
+  .animate-pulse-glow-delayed {
+    animation: pulseGlow 11s ease-in-out infinite 2s;
+  }
+</style>
