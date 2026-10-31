@@ -1,0 +1,270 @@
+---
+import { Image } from 'astro:assets';
+import Corporate from "@assets/gif/corporate.gif";
+import Redesign from "@assets/gif/redesign.gif";
+import Interactive from "@assets/gif/interactive.gif";
+import Maintenance from "@assets/gif/maintenance.gif";
+import Application from "@assets/gif/application.gif";
+
+const servicesData = [
+  {
+    image: Corporate,
+    alt: "gif_represent_corporate",
+    title: "Corporate Websites & Landing Pages",
+    description: "Build a professional digital presence that communicates your brand's value, establishes credibility, and supports your business goals.",
+    addressed: [
+      "Weak digital presence",
+      "Unclear brand messaging",
+      "Poor mobile experience",
+      "Unfocused user journeys"
+    ],
+    built: [
+      "Corporate & company websites",
+      "Campaign landing pages",
+      "Responsive page layouts",
+      "Contact & conversion pathways"
+    ]
+  },
+  {
+    image: Redesign,
+    alt: "gif_represent_redesign",
+    title: "Website Redesign & Modernization",
+    description: "Transform outdated websites into refined digital experiences through improved visual hierarchy, responsive layouts, and modern frontend implementation.",
+    addressed: [
+      "Outdated website design",
+      "Inconsistent page layouts",
+      "Poor responsive behavior",
+      "Difficult content navigation"
+    ],
+    built: [
+      "Website redesigns",
+      "Refined UI layouts",
+      "Responsive frontend rebuilds",
+      "Improved content structures"
+    ]
+  },
+  {
+    image: Interactive,
+    alt: "gif_represent_interactive",
+    title: "Interactive Web Experience Development",
+    description: "Bring digital concepts to life through purposeful motion, expressive interfaces, and engaging interactions, supported by AI-assisted design and development workflows where appropriate.",
+    addressed: [
+      "Generic visual experiences",
+      "Static, uninspiring interfaces",
+      "Limited brand differentiation",
+      "Ideas requiring visual exploration"
+    ],
+    built: [
+      "Interactive web interfaces",
+      "Scroll-driven animations",
+      "Microinteractions & transitions",
+      "AI-assisted visual explorations"
+    ]
+  },
+  {
+    image: Maintenance,
+    alt: "gif_represent_maintenance",
+    title: "Website Maintenance & Technical Support",
+    description: "Help keep websites functional and maintainable through systematic troubleshooting, bug fixes, deployment assistance, and practical technical improvements.",
+    addressed: [
+      "Website errors & broken features",
+      "Frontend bugs",
+      "Post-deployment issues",
+      "Ongoing maintenance needs"
+    ],
+    built: [
+      "Bug fixes & issue resolution",
+      "Frontend troubleshooting",
+      "Deployment assistance",
+      "Hosting & configuration support"
+    ]
+  },
+  {
+    image: Application,
+    alt: "gif_represent_application",
+    title: "Web Application Development",
+    description: "Turn operational needs into practical web applications with custom functionality, connected APIs, and interfaces designed around real workflows.",
+    addressed: [
+      "Manual or repetitive workflows",
+      "Requirements beyond static websites",
+      "Disconnected data sources",
+      "Need for custom functionality"
+    ],
+    built: [
+      "Custom web applications",
+      "Interactive dashboards",
+      "REST API integrations",
+      "Application features & workflows"
+    ]
+  }
+];
+---
+
+<section id="services-container" class="services-container ">
+  <h1 class="services-title">Services</h1>
+
+  <div class="services-wrapper">
+    <!-- Sticky Graphic Column overlay matching grid-cols-[0.5fr_1fr] -->
+    <div
+      class="sticky-image-track"
+      aria-hidden="true"
+    >
+      <div class="sticky-image-container">
+        {servicesData.map((service, index) => (
+          <div
+            class="service-clip-img service-image-frame service-image-frame--desktop "
+            data-img-index={index}
+          >
+            <!-- Use the original GIF URL so its animation is preserved. -->
+            <img
+              src={service.image.src}
+              width={service.image.width}
+              height={service.image.height}
+              alt={service.alt}
+              loading="lazy"
+              decoding="async"
+              draggable="false"
+              class="service-image"
+            />
+          </div>
+        ))}
+      </div>
+      <div class="hidden md:block"></div>
+    </div>
+
+    <!-- Scrolling Content Rows -->
+    <div class="services-list">
+      {servicesData.map((service, index) => (
+        <div
+          class="service-row"
+          data-service-index={index}
+        >
+          <!-- Mobile fallback static graphic -->
+          <div class="service-image-frame service-image-frame--mobile mx-auto md:hidden">
+            <img
+              src={service.image.src}
+              width={service.image.width}
+              height={service.image.height}
+              alt={service.alt}
+              loading="lazy"
+              decoding="async"
+              draggable="false"
+              class="service-image"
+            />
+          </div>
+
+          <!-- Empty placeholder space on desktop so text aligns right -->
+          <div class="hidden md:block"></div>
+
+          <!-- Normal scrolling service text -->
+          <article class="service-body">
+            <h2 class="service-body-title">{service.title}</h2>
+            <p class="service-body-desc">{service.description}</p>
+            
+            <div class="service-list-container">
+              <div class="flex flex-col gap-2">
+                <h5 class="text-sanora-blue-450">Designed to address</h5>
+                <ul class="flex flex-col list-none p-0 m-0">
+                  {service.addressed.map((item) => (
+                    <li>{item}</li>
+                  ))}
+                </ul>
+              </div>
+
+              <div class="flex flex-col gap-2">
+                <h5 class="text-sanora-blue-450">What I build</h5>
+                <ul class="flex flex-col list-none p-0 m-0">
+                  {service.built.map((item) => (
+                    <li>{item}</li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+          </article>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<script>
+  import { gsap } from "gsap";
+  import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+  gsap.registerPlugin(ScrollTrigger);
+
+  document.addEventListener("DOMContentLoaded", () => {
+    const wrapper = document.querySelector<HTMLElement>(".services-wrapper");
+    if (!wrapper) return;
+
+    const rows = wrapper.querySelectorAll<HTMLElement>(".service-row");
+    const clipImages = wrapper.querySelectorAll<HTMLElement>(".service-clip-img");
+
+    if (!rows.length || !clipImages.length) return;
+
+    // Responsive setup with GSAP matchMedia
+    const mm = gsap.matchMedia();
+
+    mm.add("(min-width: 768px)", () => {
+      // Desktop / Tablet mode: initialize sticky clip-paths
+      clipImages.forEach((img, idx) => {
+        if (idx === 0) {
+          gsap.set(img, { clipPath: "polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)" });
+        } else {
+          gsap.set(img, { clipPath: "polygon(0% 100%, 100% 100%, 100% 100%, 0% 100%)" });
+        }
+      });
+
+      const sampleImg = clipImages[0];
+      const imgHeight = sampleImg ? sampleImg.offsetHeight : 400;
+      const halfImgHeight = imgHeight / 2;
+
+      rows.forEach((row, index) => {
+        const currentImg = clipImages[index];
+        const nextImg = clipImages[index + 1];
+        if (!currentImg) return;
+
+        if (index < rows.length - 1 && nextImg) {
+          const tl = gsap.timeline({
+            scrollTrigger: {
+              trigger: row,
+              start: `bottom center+=${halfImgHeight}px`,
+              end: `bottom center-=${halfImgHeight}px`,
+              scrub: true,
+              invalidateOnRefresh: true,
+            },
+            defaults: { ease: "none" },
+          });
+
+          tl.to(
+            currentImg,
+            {
+              clipPath: "polygon(0% 0%, 100% 0%, 100% 0%, 0% 0%)",
+            },
+            0
+          ).to(
+            nextImg,
+            {
+              clipPath: "polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)",
+            },
+            0
+          );
+        }
+      });
+    });
+
+    mm.add("(max-width: 767px)", () => {
+      // Mobile reset: clear all clip-paths and inline GSAP styles
+      clipImages.forEach((img) => {
+        gsap.set(img, { clearProps: "clipPath,transform" });
+      });
+    });
+
+    // Recalculate layout triggers on window resize
+    window.addEventListener("resize", () => {
+      ScrollTrigger.refresh();
+    });
+
+    ScrollTrigger.refresh();
+  });
+</script>
