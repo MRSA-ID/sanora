@@ -63,15 +63,16 @@
 @theme {
 	--font-geist: "Geist", sans-serif;
 	--font-montreal: "PP Neue Montreal", sans-serif;
+	--font-newsreader: "Newsreader", serif;
 
 	--text-big: clamp(3rem, 13.333vw, 12rem);
 	--text-hero-large: clamp(28px, 6.944vw, 120px);
 	--text-about-large: clamp(32px, 6.667vw, 96px);
 	--text-hero-bottom: clamp(16px, 1.667vw, 24px);
 	--text-hero-bottom-small: clamp(14px, 1.389vw, 20px);
+	--text-project-large: clamp(42px, 7.407vw, 128px);
 	/* clamp(1.5rem, 8.6vw, 7.75rem) 124px */
 	/* clamp(2rem, 6.5vw, 6rem) 96px */
-
 	--color-sanora-blue-50: #f6f9ff;
 	--color-sanora-blue-100: #edf3ff;
 	--color-sanora-blue-200: #dce8ff;
@@ -329,3 +330,152 @@ body.is-locked {
 	@apply opacity-0 blur-[12px] translate-y-8 relative w-full max-w-300 overflow-hidden py-4 mt-12 sm:mt-16 md:mt-20 mask-[linear-gradient(to_right,transparent,black_15%,black_85%,transparent)];
 }
 /* end about */
+
+/* projects */
+.projects {
+	--row-pad: 10px;
+	--cols: minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1fr) auto;
+}
+
+.projects-head {
+	display: grid;
+	line-height: 14px;
+	letter-spacing: 0.02em;
+	grid-template-columns: var(--cols);
+}
+
+.project {
+	line-height: 20px;
+}
+
+.project::after {
+	content: "";
+	background: var(--color-sanora-blue-950);
+	transform-origin: 0 0;
+	height: 1.5px;
+	transition: transform 1.5s cubic-bezier(0.33, 1, 0.68, 1) 0.2s;
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	transform: scaleX(0);
+}
+
+.project.is-in::after {
+	transform: scaleX(1);
+}
+
+.project-row {
+	padding: var(--row-pad) 0;
+	grid-template-columns: var(--cols);
+	background: transparent;
+	transition: color 0.3s cubic-bezier(0.33, 1, 0.68, 1);
+}
+
+/* Hover Fill Overlay Glitch-Free */
+.project-bg {
+	inset: 0;
+	width: 100%;
+	height: 100%;
+	pointer-events: none;
+	transform: translateY(-100%);
+	transition: transform 0.45s cubic-bezier(0.33, 1, 0.68, 1);
+	will-change: transform;
+}
+
+/* Direction: From Top */
+.project-row.is-from-top .project-bg {
+	transform: translateY(-100%);
+}
+
+/* Direction: From Bottom */
+.project-row.is-from-bottom .project-bg {
+	transform: translateY(100%);
+}
+
+/* Active Hover State */
+.project-row.is-hovering .project-bg {
+	transform: translateY(0%) !important;
+}
+
+/* Leaving State */
+.project-row.is-leaving.is-from-top .project-bg {
+	transform: translateY(-100%);
+}
+
+.project-row.is-leaving.is-from-bottom .project-bg {
+	transform: translateY(100%);
+}
+
+/* Project Cell Base Styling & Explicit Transition */
+.project-cell {
+	box-sizing: border-box;
+	transition:
+		color 0.2s,
+		padding 0.3s cubic-bezier(0.33, 1, 0.68, 1);
+}
+
+/* Hover Cell Text Color Shifts */
+.project-row.is-hovering {
+	color: var(--color-sanora-neutral-50) !important;
+}
+
+.project-row.is-hovering .project-text {
+	color: var(--color-sanora-neutral-50) !important;
+}
+
+/* Fix 1: Target {item.name} cell by custom property --i: 0 */
+.project-row.is-hovering .project-cell[style*="--i: 0"] {
+	padding-left: 0.9rem !important;
+}
+
+/* Fix 2: Target year cell by class .projects-year */
+.project-row.is-hovering .project-cell.projects-year {
+	padding-right: 0.9rem !important;
+}
+
+/* Staggered Row Text Entrance */
+.project-text {
+	transform: translateY(110%);
+	transition:
+		transform 0.8s cubic-bezier(0.33, 1, 0.68, 1) calc(var(--i) * 80ms),
+		color 0.2s ease;
+	will-change: transform;
+}
+
+.project.is-in .project-text {
+	transform: translateY(0%);
+}
+
+/* Accordion Dropdown Body */
+.project-body {
+	display: grid;
+	grid-template-rows: 0fr;
+	transition: grid-template-rows 0.5s cubic-bezier(0.33, 1, 0.68, 1);
+}
+
+.project.is-open .project-body {
+	grid-template-rows: 1fr;
+}
+
+.project-desc {
+	letter-spacing: -0.01em;
+	font-size: clamp(1.35rem, 2vw, 2.225rem);
+	line-height: 1.25;
+}
+
+.project-link {
+	text-underline-offset: 0.15em;
+	text-decoration: underline;
+}
+
+.projects__year {
+	text-align: right;
+}
+
+@media (max-width: 767px) {
+	.projects {
+		--cols: minmax(0, 1fr) auto;
+	}
+}
+/* end projects */

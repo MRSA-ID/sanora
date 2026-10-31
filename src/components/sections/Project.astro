@@ -1,0 +1,444 @@
+---
+// src/components/sections/Project.astro
+
+interface ProjectItem {
+  id: string;
+  name: string;
+  category: string;
+  client: string;
+  year: string;
+  description: string;
+  url: string;
+  images: string[];
+}
+
+const projectsData: ProjectItem[] = [
+  {
+    id: "project-1",
+    name: "Holding company Ecosystem",
+    category: "Web Design, Development",
+    client: "Galedicorps",
+    year: "2026",
+    description:
+      "Galedi Corps is an enterprise corporate holding group in Indonesia overseeing 10 commercial brands and 3 digital media platforms across 4 strategic business units (SBUs): Fragrance & Wellness, Travel & Hospitality, Experiential Events & Industrial Packaging, and Human Capital Consulting",
+    url: "https://www.galedicorps.com/",
+    images: [
+      "https://cdn.21st.dev/assets/mirror/c3/c3fbd2afa140223999a441b32ed986f61d473930002708df805a81532a326aac.jpg",
+      "https://cdn.21st.dev/assets/mirror/9d/9d8b2f675a5814476ada3736ce439bcda23c5c389e0ebf9b25d8a0c09f3bbcfe.jpg",
+      "https://cdn.21st.dev/assets/mirror/8b/8bb738bf2f00d7f7ed3c3ec034adb9938ad38f4be4ac191d632a6a11ad525574.jpg",
+    ],
+  },
+  {
+    id: "project-2",
+    name: "AI-Powered Event Visual Production",
+    category: "AI Video Generation",
+    client: "KPLP",
+    year: "2026",
+    description:
+      "A generative AI video production combining prompt engineering, AI-assisted visual generation, cinematic sequencing, and post-production to create an immersive opening experience for KPLP's 2026 Technical Working Meeting.",
+    url: "none",
+    images: [
+      "https://cdn.21st.dev/assets/mirror/ac/ac5ac700b188d7ef16ee9dab868098b59f15c440db3f71d4e8c03262a3287577.jpg",
+      "https://cdn.21st.dev/assets/mirror/ef/ef25eff6ce655fba459b3b7e7711524dc92499aa18f6c7dbea9a0fcc56a8f908.jpg",
+    ],
+  },
+  {
+    id: "project-3",
+    name: "Hospitality Website",
+    category: "Web Design",
+    client: "Arkaloka Hospitality",
+    year: "2026",
+    description:
+      "Designed the official UI/UX web concept for Arkaloka Hospitality, a forward-thinking Indonesian hospitality group introducing the concept of Neosantara—reimagining Indonesian heritage through contemporary design, mindful living, and modern digital experiences.",
+    url: "none",
+    images: [
+      "https://cdn.21st.dev/assets/mirror/f2/f28b370a5dcbf76240f1504579c4b05fc0ff0bb990a42aff8dc2f73a5dc46072.jpg",
+      "https://cdn.21st.dev/assets/mirror/f2/f26a1eac85704dda924820392dedfb72d51d8261d35354f83b35d683617295f3.jpg",
+    ],
+  },
+  {
+    id: "project-4",
+    name: "Pest Control Solutions Page",
+    category: "Web Design, Development",
+    client: "Bomberpest",
+    year: "2026",
+    description:
+      "Designing and developing a digital presence for BomberPest, bringing together visual clarity, intuitive navigation, and responsive frontend implementation to create a professional online experience.",
+    url: "https://www.bomberpest.com/",
+    images: [
+      "https://cdn.21st.dev/assets/mirror/77/7755d23eaaa0aa5b403343f44afa7a29b2d06d3065fe54c602b14ba01d00f2aa.jpg",
+      "https://cdn.21st.dev/assets/mirror/65/657317761fe9058a1d43711b13c543a71eb5199b7a5d9abf4c28479674e39cf7.jpg",
+      "https://cdn.21st.dev/assets/mirror/c3/c3fbd2afa140223999a441b32ed986f61d473930002708df805a81532a326aac.jpg",
+    ],
+  },
+  {
+    id: "project-5",
+    name: "Digital Experience Design & Development",
+    category: "Web Design, Development",
+    client: "Tamarin Hotel Jakarta",
+    year: "2026",
+    description:
+      "A complete redesign and development of Tamarin Hotel Jakarta's digital presence, combining refined visual design, immersive hospitality imagery, and intuitive interactions to create a seamless online experience for discovering the hotel's rooms, dining, facilities, and event spaces.",
+    url: "https://tamarinhoteljakarta.com/",
+    images: [
+      "https://cdn.21st.dev/assets/mirror/9d/9d8b2f675a5814476ada3736ce439bcda23c5c389e0ebf9b25d8a0c09f3bbcfe.jpg",
+      "https://cdn.21st.dev/assets/mirror/8b/8bb738bf2f00d7f7ed3c3ec034adb9938ad38f4be4ac191d632a6a11ad525574.jpg",
+      "https://cdn.21st.dev/assets/mirror/ac/ac5ac700b188d7ef16ee9dab868098b59f15c440db3f71d4e8c03262a3287577.jpg",
+    ],
+  },
+  {
+    id: "project-6",
+    name: "Qwerty Service Landing Page",
+    category: "Web Design, Development",
+    client: "Qwerty Service",
+    year: "2025",
+    description:
+      "A digital presence designed and developed for Qwerty Service, presenting its technology solutions through a professional interface, Built to strengthen brand credibility and make technology services more accessible to potential customers.",
+    url: "https://qwerty-service.vercel.app/",
+    images: [
+      "https://cdn.21st.dev/assets/mirror/ef/ef25eff6ce655fba459b3b7e7711524dc92499aa18f6c7dbea9a0fcc56a8f908.jpg",
+      "https://cdn.21st.dev/assets/mirror/f2/f28b370a5dcbf76240f1504579c4b05fc0ff0bb990a42aff8dc2f73a5dc46072.jpg",
+    ],
+  },
+  {
+    id: "project-7",
+    name: "Corporate Website Design & Development",
+    category: "Web Design, Development",
+    client: "PT. Indo Rezky Utama (IRU)",
+    year: "2025",
+    description:
+      "A corporate website designed and developed to establish PT. Indo Rezky Utama's digital presence and strengthen its credibility in the international charcoal briquette market.",
+    url: "https://iru-beta.vercel.app/",
+    images: [
+      "https://cdn.21st.dev/assets/mirror/f2/f26a1eac85704dda924820392dedfb72d51d8261d35354f83b35d683617295f3.jpg",
+      "https://cdn.21st.dev/assets/mirror/77/7755d23eaaa0aa5b403343f44afa7a29b2d06d3065fe54c602b14ba01d00f2aa.jpg",
+      "https://cdn.21st.dev/assets/mirror/65/657317761fe9058a1d43711b13c543a71eb5199b7a5d9abf4c28479674e39cf7.jpg",
+    ],
+  },
+  {
+    id: "project-8",
+    name: "PO System Web Application",
+    category: "Development",
+    client: "Ayam Geprek Kemayu",
+    year: "2025",
+    description:
+      "A custom online ordering platform for Kemayu, designed to simplify product purchases and centralize order management. Featuring QRIS and bank transfer payment options with manual transaction verification, the system gives the owner control over payment confirmation before orders proceed to fulfillment.",
+    url: "https://po-system-mocha.vercel.app/",
+    images: [
+      "https://cdn.21st.dev/assets/mirror/c3/c3fbd2afa140223999a441b32ed986f61d473930002708df805a81532a326aac.jpg",
+      "https://cdn.21st.dev/assets/mirror/9d/9d8b2f675a5814476ada3736ce439bcda23c5c389e0ebf9b25d8a0c09f3bbcfe.jpg",
+    ],
+  },
+  {
+    id: "project-9",
+    name: "Exalter Students Platform",
+    category: "Web Design, Development",
+    client: "Exalter Students",
+    year: "2024",
+    description:
+      "A modern web application empowering the next generation of leaders to excel in academics, career building, and personal development.",
+    url: "https://exalter-ten.vercel.app/",
+    images: [
+      "https://cdn.21st.dev/assets/mirror/8b/8bb738bf2f00d7f7ed3c3ec034adb9938ad38f4be4ac191d632a6a11ad525574.jpg",
+      "https://cdn.21st.dev/assets/mirror/ac/ac5ac700b188d7ef16ee9dab868098b59f15c440db3f71d4e8c03262a3287577.jpg",
+    ],
+  },
+  {
+    id: "project-10",
+    name: "Inventify Center Landing Page",
+    category: "Web Design, Development",
+    client: "Exalter Students",
+    year: "2024",
+    description:
+      "A global digital platform empowering young visionaries through incubation, workshops, and international competitions to turn innovative ideas into reality.",
+    url: "https://inventify-center.vercel.app/",
+    images: [
+      "https://cdn.21st.dev/assets/mirror/ef/ef25eff6ce655fba459b3b7e7711524dc92499aa18f6c7dbea9a0fcc56a8f908.jpg",
+    ],
+  },
+  {
+    id: "project-11",
+    name: "Alpaca Image Generator",
+    category: "Development, Case Studies",
+    client: "Codementor",
+    year: "2024",
+    description:
+      "A global digital platform empowering young visionaries through incubation, workshops, and international competitions to turn innovative ideas into reality.",
+    url: "https://alpaca-images-generator.vercel.app/",
+    images: [
+      "https://cdn.21st.dev/assets/mirror/f2/f28b370a5dcbf76240f1504579c4b05fc0ff0bb990a42aff8dc2f73a5dc46072.jpg",
+      "https://cdn.21st.dev/assets/mirror/f2/f26a1eac85704dda924820392dedfb72d51d8261d35354f83b35d683617295f3.jpg",
+    ],
+  },
+  {
+    id: "project-12",
+    name: "Landing Page EBP",
+    category: "Development",
+    client: "PT Empat Beruang Perkasa",
+    year: "2023",
+    description:
+      "A complete UI/UX landing page redesign for PT Empat Beruang Perkasa, modernizing their corporate digital presence for enhanced client engagement and brand credibility",
+    url: "https://ebp.co.id/",
+    images: [
+      "https://cdn.21st.dev/assets/mirror/77/7755d23eaaa0aa5b403343f44afa7a29b2d06d3065fe54c602b14ba01d00f2aa.jpg",
+      "https://cdn.21st.dev/assets/mirror/65/657317761fe9058a1d43711b13c543a71eb5199b7a5d9abf4c28479674e39cf7.jpg",
+    ],
+  },
+  {
+    id: "project-13",
+    name: "bFarm Landing Page",
+    category: "Development",
+    client: "PT Empat Beruang Perkasa",
+    year: "2023",
+    description:
+      "A complete UI/UX landing page redesign for BFarm, translating their agricultural brand into a modern, high-performance digital experience",
+    url: "https://ebp.co.id/",
+    images: [
+      "https://cdn.21st.dev/assets/mirror/c3/c3fbd2afa140223999a441b32ed986f61d473930002708df805a81532a326aac.jpg",
+    ],
+  },
+  {
+    id: "project-14",
+    name: "Ecommerce Project",
+    category: "Development, Case Studies",
+    client: "Hacktive8",
+    year: "2021",
+    description:
+      "An interactive e-commerce web application that integrates the FakeStoreAPI to provide a real-time experience for exploring and managing a product catalog.",
+    url: "https://shopsun-commerce.netlify.app/",
+    images: [
+      "https://cdn.21st.dev/assets/mirror/9d/9d8b2f675a5814476ada3736ce439bcda23c5c389e0ebf9b25d8a0c09f3bbcfe.jpg",
+      "https://cdn.21st.dev/assets/mirror/8b/8bb738bf2f00d7f7ed3c3ec034adb9938ad38f4be4ac191d632a6a11ad525574.jpg",
+    ],
+  },
+  {
+    id: "project-15",
+    name: "Circlegeo design",
+    category: "Web Design",
+    client: "Circlegeo",
+    year: "2021",
+    description:
+      "UI/UX design for the CircleGeo company profile, created in Figma using a precise responsive layout approach tailored for Desktop, Tablet, and Android displays.",
+    url: "none",
+    images: [
+      "https://cdn.21st.dev/assets/mirror/ac/ac5ac700b188d7ef16ee9dab868098b59f15c440db3f71d4e8c03262a3287577.jpg",
+      "https://cdn.21st.dev/assets/mirror/ef/ef25eff6ce655fba459b3b7e7711524dc92499aa18f6c7dbea9a0fcc56a8f908.jpg",
+    ],
+  },
+];
+
+const splitText = (text: string) => {
+  return text.split("").map((char) => (char === " " ? "\u00A0" : char));
+};
+
+const introChars = splitText(
+  "Sanora is my creative engineering practice, where frontend development, visual design, interaction, and motion come together to create digital experiences that feel as good as they work."
+);
+const titleChars = splitText("Project");
+---
+
+<section id="project-container" class="project-container flex flex-col w-full max-w-360 h-max px-6 sm:px-10 py-16 sm:py-24 bg-sanora-neutral-50 text-sanora-blue-950 font-geist mx-auto gap-12 sm:gap-20">
+  <p class="project-intro font-normal text-2xl sm:text-[32px] text-justify leading-snug inline-flex flex-wrap overflow-hidden">
+    {introChars.map((char) => (
+      <span class="char inline-block opacity-0 blur-[10px] translate-y-6">{char}</span>
+    ))}
+  </p>
+
+  <div class="flex flex-col gap-7">
+    <h1 class="project-title font-newsreader text-project-large italic inline-flex overflow-hidden">
+      {titleChars.map((char) => (
+        <span class="char inline-block opacity-0 blur-[12px] translate-y-8">{char}</span>
+      ))}
+    </h1>
+
+    <div class="projects font-geist w-full">
+      <!-- Table Header -->
+      <div class="projects-head border-b-[1.5px] border-sanora-blue-900 uppercase pb-2 text-[.6875rem]" aria-hidden="true">
+        <span>Name</span>
+        <span class="hidden md:inline-block">Category</span>
+        <span class="hidden md:inline-block">Client</span>
+        <span class="projects__year">Year</span>
+      </div>
+
+      <!-- Projects Dynamic Loop -->
+      {projectsData.map((item, index) => (
+        <article class="project text-[.9375rem] relative" data-project-index={index}>
+          <button
+            type="button"
+            aria-controls={item.id}
+            class="project-row relative grid w-full text-left cursor-pointer isolate border-0 overflow-hidden select-none"
+            aria-expanded="false"
+          >
+            <!-- Hover Background Fill Layer -->
+            <span class="project-bg z-0 bg-sanora-blue-950 absolute" aria-hidden="true"></span>
+
+            <!-- Table Cells -->
+            <span class="project-cell isolate z-1 block relative overflow-hidden" style="--i: 0">
+              <span class="project-text block font-medium">{item.name}</span>
+            </span>
+            <span class="project-cell projects-col--wide isolate z-1 hidden md:block relative overflow-hidden" style="--i: 1">
+              <span class="project-text block">{item.category}</span>
+            </span>
+            <span class="project-cell projects-col--wide isolate z-1 hidden md:block relative overflow-hidden" style="--i: 2">
+              <span class="project-text block">{item.client}</span>
+            </span>
+            <span class="project-cell projects-year isolate z-1 block relative overflow-hidden" style="--i: 3">
+              <span class="project-text block text-right font-mono">{item.year}</span>
+            </span>
+          </button>
+
+          <!-- Accordion Collapsible Body -->
+          <div class="project-body grid" inert id={item.id}>
+            <div class="project-inner min-h-0 overflow-hidden">
+              <p class="project-desc max-w-[32em] pt-[1em]">
+                {item.description}
+              </p>
+              {item.url !== "none" ? (
+                <a
+                  class="project-link mt-[1rem] text-[.9375rem] inline-block font-medium hover:text-sanora-blue-700 transition-colors"
+                  href={item.url}
+                  target="_blank"
+                  rel="noopener"
+                >
+                  See website
+                </a>
+              ) : null}
+              <div class="project-images grid pt-8 pb-6 gap-4 grid-cols-1 sm:grid-cols-2 md:grid-cols-3">
+                {item.images.map((imgSrc, imgIdx) => (
+                  <div class="overflow-hidden rounded-lg bg-sanora-blue-950/10 aspect-[16/10] group">
+                    <img
+                      src={imgSrc}
+                      alt={`${item.name} screenshot ${imgIdx + 1}`}
+                      loading="lazy"
+                      class="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+                    />
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>
+
+<script>
+  import { gsap } from "gsap";
+  import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+  gsap.registerPlugin(ScrollTrigger);
+
+  document.addEventListener("DOMContentLoaded", () => {
+    const section = document.getElementById("project-container");
+    if (!section) return;
+
+    ScrollTrigger.refresh();
+
+    // 1. Heading & Intro Character-by-Character Reveal Timeline (Play Once)
+    const textTl = gsap.timeline({
+      scrollTrigger: {
+        trigger: section,
+        start: "top 75%",
+        once: true,
+      },
+    });
+
+    textTl
+      .to(".project-intro .char", {
+        opacity: 1,
+        y: 0,
+        filter: "blur(0px)",
+        duration: 0.8,
+        stagger: 0.005,
+        ease: "power3.out",
+      })
+      .to(
+        ".project-title .char",
+        {
+          opacity: 1,
+          y: 0,
+          filter: "blur(0px)",
+          duration: 1,
+          stagger: 0.04,
+          ease: "power3.out",
+        },
+        "-=0.4"
+      );
+
+    // 2. Project Rows Scroll Entrance (Triggers Only Once)
+    const projectArticles = section.querySelectorAll<HTMLElement>(".project");
+
+    projectArticles.forEach((article, idx) => {
+      ScrollTrigger.create({
+        trigger: article,
+        start: "top 88%",
+        once: true,
+        onEnter: () => {
+          gsap.delayedCall(idx * 0.08, () => {
+            article.classList.add("is-in");
+          });
+        },
+      });
+
+      // 3. Directional Hover Fill Animation
+      const btn = article.querySelector<HTMLButtonElement>(".project-row");
+      if (!btn) return;
+
+      btn.addEventListener("mouseenter", (e) => {
+        const rect = btn.getBoundingClientRect();
+        const isTop = e.clientY - rect.top < rect.height / 2;
+
+        btn.classList.remove("is-leaving", "is-from-top", "is-from-bottom");
+        btn.classList.add(isTop ? "is-from-top" : "is-from-bottom");
+
+        void btn.offsetWidth;
+        btn.classList.add("is-hovering");
+      });
+
+      btn.addEventListener("mouseleave", (e) => {
+        const rect = btn.getBoundingClientRect();
+        const isTop = e.clientY - rect.top < rect.height / 2;
+
+        btn.classList.remove("is-hovering");
+        btn.classList.add("is-leaving");
+
+        if (isTop) {
+          btn.classList.add("is-from-top");
+          btn.classList.remove("is-from-bottom");
+        } else {
+          btn.classList.add("is-from-bottom");
+          btn.classList.remove("is-from-top");
+        }
+      });
+
+      // 4. Accordion Toggle
+      btn.addEventListener("click", () => {
+        const isOpen = article.classList.contains("is-open");
+
+        projectArticles.forEach((other) => {
+          if (other !== article && other.classList.contains("is-open")) {
+            other.classList.remove("is-open");
+            const otherBtn = other.querySelector<HTMLButtonElement>(".project-row");
+            const otherBody = other.querySelector<HTMLElement>(".project-body");
+            if (otherBtn) otherBtn.setAttribute("aria-expanded", "false");
+            if (otherBody) otherBody.setAttribute("inert", "");
+          }
+        });
+
+        const body = article.querySelector<HTMLElement>(".project-body");
+        if (isOpen) {
+          article.classList.remove("is-open");
+          btn.setAttribute("aria-expanded", "false");
+          if (body) body.setAttribute("inert", "");
+        } else {
+          article.classList.add("is-open");
+          btn.setAttribute("aria-expanded", "true");
+          if (body) body.removeAttribute("inert");
+        }
+
+        setTimeout(() => ScrollTrigger.refresh(), 500);
+      });
+    });
+  });
+</script>
