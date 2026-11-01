@@ -1,0 +1,18 @@
+---
+import ContributionSkyline from "@components/ui/contribution-skyline";
+import { getGitHubContributions } from "@/lib/github";
+
+const contributions = await getGitHubContributions("MRSA-ID");
+---
+
+<section id="contribute-container" class="contribute-container flex flex-col justify-center items-center min-h-screen h-full max-w-340 mx-auto px-4 sm:px-8 py-12">
+ <div class="w-full text-sanora-blue-950">
+  <p class="font-geist text-sm font-normal uppercase tracking-wider">Github</p>
+  <h1 class="font-newsreader text-project-large italic leading-[120%]">Contributor</h1>
+ </div>
+  <ContributionSkyline 
+    data={contributions.length > 0 ? contributions : undefined} 
+    palette="sanora"
+    client:load 
+  />
+</section>
