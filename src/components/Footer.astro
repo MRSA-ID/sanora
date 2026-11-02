@@ -65,10 +65,10 @@ const footerContent = [
 ]
 ---
 
-<footer class="flex flex-col w-full min-h-screen h-full font-geist text-sanora-blue-950 justify-center sm:justify-start px-4 sm:px-10 pt-6 pb-11 gap-10 overflow-hidden relative">
+<footer id="footer-reveal" class="flex flex-col w-full min-h-screen h-full font-geist text-sanora-blue-950 justify-center sm:justify-start px-4 sm:px-10 pt-6 pb-11 gap-10 overflow-hidden relative z-0">
  <!-- marquee text -->
  <div class="footer-marquee-wrapper relative w-full overflow-hidden mask-[linear-gradient(to_right,transparent_0%,black_2.5%,black_97.5%,transparent_100%)] select-none">
-  <div class="footer-marquee-track flex w-max animate-footer-marquee hover:[animation-play-state:paused] whitespace-nowrap">
+  <div id="footer-marquee-track" class="footer-marquee-track flex w-max whitespace-nowrap will-change-transform">
    <!-- First Track -->
    <div class="flex items-center gap-8 pr-8">
     <span class="font-montreal text-footer-large font-normal leading-none">/ Get in touch</span>
@@ -135,41 +135,97 @@ const footerContent = [
      client:visible 
    />
   </div>
-
-  <!-- <div 
-    class="absolute inset-0 translate-y-[50%] pointer-events-none z-1"
-    style="background: radial-gradient(120% 100% at 50% -30%, transparent 45%, #c4d8ff 65%, #0129b0 95%); filter: blur(24px); opacity: 0.85;"
-  ></div> -->
-
-  <!-- High Contrast Radial Gradient Edge Overlay -->
-  <!-- <div 
-    class="absolute inset-0 translate-y-[50%] pointer-events-none z-2 mix-blend-multiply"
-    style="background: radial-gradient(110% 85% at 50% -20%, transparent 50%, #0129b0 90%);"
-  ></div> -->
  </div>
 </footer>
 
 <script>
+  import { gsap } from "gsap";
+  import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+  gsap.registerPlugin(ScrollTrigger);
+
+  // 1. Scroll-to-Top Handler
   const scrollBtn = document.getElementById('scroll-to-top');
   scrollBtn?.addEventListener('click', () => {
-    window.scrollTo({
-      top: 0,
-      behavior: 'smooth'
-    });
+    if ((window as any).lenis) {
+      (window as any).lenis.scrollTo(0);
+    } else {
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      });
+    }
+  });
+
+  document.addEventListener("DOMContentLoaded", () => {
+    const footer = document.getElementById("footer-reveal");
+    const marqueeTrack = document.getElementById("footer-marquee-track");
+
+    // 2. Footer Curtain Reveal Animation
+    if (footer) {
+      const prevSection = footer.previousElementSibling;
+      if (prevSection) {
+        gsap.set(prevSection, { position: "relative", zIndex: 10 });
+      }
+
+      gsap.fromTo(
+        footer,
+        { yPercent: -35, opacity: 0.6 },
+        {
+          yPercent: 0,
+          opacity: 1,
+          ease: "none",
+          scrollTrigger: {
+            trigger: footer,
+            start: "top bottom",
+            end: "bottom bottom",
+            scrub: true,
+            onRefresh: () => ScrollTrigger.update(),
+          },
+        }
+      );
+    }
+
+    // 3. Ultra-Smooth Low-Velocity Infinite Marquee
+    if (marqueeTrack) {
+      let currentX = 0;
+      let baseSpeed = 0.8; // Controlled constant speed
+      let scrollVelocity = 0;
+      let isHovered = false;
+
+      // Pause continuous movement on hover
+      marqueeTrack.addEventListener("mouseenter", () => { isHovered = true; });
+      marqueeTrack.addEventListener("mouseleave", () => { isHovered = false; });
+
+      // Low-velocity multiplier (0.008) for slow, elegant scroll interaction
+      ScrollTrigger.create({
+        onUpdate: (self) => {
+          scrollVelocity = self.getVelocity() * 0.008;
+        },
+      });
+
+      gsap.ticker.add(() => {
+        const halfWidth = marqueeTrack.offsetWidth / 2;
+        if (!halfWidth) return;
+
+        // Gentle velocity decay
+        scrollVelocity *= 0.94;
+
+        // Calculate delta
+        const speedMultiplier = isHovered ? 0 : baseSpeed;
+        const delta = speedMultiplier + scrollVelocity;
+
+        currentX -= delta;
+
+        // Wrap seamlessly around half-width boundary
+        if (currentX <= -halfWidth) {
+          currentX += halfWidth;
+        } else if (currentX > 0) {
+          currentX -= halfWidth;
+        }
+
+        gsap.set(marqueeTrack, { x: currentX });
+      });
+    }
   });
 </script>
-
-<style>
-  @keyframes footer-marquee {
-    0% {
-      transform: translateX(0%);
-    }
-    100% {
-      transform: translateX(-50%);
-    }
-  }
-
-  .animate-footer-marquee {
-    animation: footer-marquee 25s linear infinite;
-  }
-</style>
