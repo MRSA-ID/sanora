@@ -3,31 +3,19 @@
 import * as React from "react";
 
 export interface HalftoneWordmarkProps {
-	/** Wordmark text printed in dots. */
 	wordmark?: string;
-	/** Background color hex or CSS variable fallback. */
 	background?: string;
-	/** Ink dot color hex. */
 	ink?: string;
-	/** Color a dot warms toward on hover/push. */
 	warm?: string;
-	/** Distance between dot centres, in CSS px. Defaults to 6. */
 	dotGap?: number;
-	/** How far the pointer pushes, in CSS px. Defaults to 80. */
 	radius?: number;
-	/** How much of the word's cap height hangs below the bottom edge (0–0.6). Defaults to 0.15. */
 	crop?: number;
-	/** Print grain opacity overlay (0–1). Defaults to 0.4. */
 	grain?: number;
-	/** Pointer interaction & click ripple effect. Defaults to true. */
 	interactive?: boolean;
-	/** Font family for wordmark rendering. */
 	fontFamily?: string;
-	/** Font weight of the wordmark. Defaults to 800. */
 	fontWeight?: number;
-	/** Explicit CSS height. Defaults to "280px". */
 	height?: string;
-	/** Extra container classes. */
+	progress?: number;
 	className?: string;
 }
 
@@ -108,6 +96,7 @@ export default function HalftoneWordmark({
 	fontFamily = MONARCH_FONT,
 	fontWeight = 700,
 	height = "280px",
+	progress = 1,
 	className = "",
 }: HalftoneWordmarkProps) {
 	const rootRef = React.useRef<HTMLDivElement | null>(null);
@@ -125,6 +114,7 @@ export default function HalftoneWordmark({
 		fontFamily,
 		fontWeight,
 		wordmark,
+		progress,
 	});
 
 	opts.current = {
@@ -139,6 +129,7 @@ export default function HalftoneWordmark({
 		fontFamily,
 		fontWeight,
 		wordmark,
+		progress,
 	};
 
 	const key = [
@@ -232,11 +223,15 @@ export default function HalftoneWordmark({
 					if (cov < 0.06) continue;
 					const hx = gx * gap + gap / 2;
 					const hy = gy * gap + gap / 2;
-					tmp.push(hx, hy, 0, 0, hx, hy, hwfRadius(cov, gap));
+
+					const randX = (Math.sin(gx * 12.9898 + gy * 78.233) * 43758.5453) % 1;
+					const randY = (Math.cos(gx * 4.1414 + gy * 43.123) * 23421.1234) % 1;
+
+					tmp.push(hx, hy, 0, 0, hx, hy, hwfRadius(cov, gap), randX, randY);
 				}
 			}
 			dots = new Float32Array(tmp);
-			count = tmp.length / 7;
+			count = tmp.length / 9;
 
 			grainTile = document.createElement("canvas");
 			grainTile.width = 256;
@@ -265,19 +260,31 @@ export default function HalftoneWordmark({
 			const ringR = ringAge * 0.9;
 			let moving = false;
 
+			const pVal = Math.max(0, Math.min(1, opts.current.progress));
+
 			for (let i = 0; i < count; i++) {
-				const j = i * 7;
+				const j = i * 9;
 				let x = dots[j];
 				let y = dots[j + 1];
 				let vx = dots[j + 2];
 				let vy = dots[j + 3];
 				const hx = dots[j + 4];
 				const hy = dots[j + 5];
+				const baseRadius = dots[j + 6];
+				const rx = dots[j + 7];
+				const ry = dots[j + 8];
+
+				const invP = 1 - pVal;
+				const offsetY = invP * (h * 0.4 + ry * 140);
+				const offsetX = invP * (rx - 0.5) * 100;
+
+				const targetHX = hx + offsetX;
+				const targetHY = hy + offsetY;
 
 				if (!reduced) {
 					if (ringAge < 900) {
-						const dx = hx - ring.x;
-						const dy = hy - ring.y;
+						const dx = targetHX - ring.x;
+						const dy = targetHY - ring.y;
 						const d = Math.sqrt(dx * dx + dy * dy) + 0.001;
 						const band = 1 - Math.min(1, Math.abs(d - ringR) / 26);
 						if (band > 0) {
@@ -286,19 +293,19 @@ export default function HalftoneWordmark({
 							vy += (dy / d) * f;
 						}
 					}
-					const s = hwfStep(x, y, vx, vy, hx, hy, px, py, r);
+					const s = hwfStep(x, y, vx, vy, targetHX, targetHY, px, py, r);
 					x = s[0];
 					y = s[1];
 					vx = s[2];
 					vy = s[3];
 					if (
 						Math.abs(vx) + Math.abs(vy) > 0.02 ||
-						Math.abs(x - hx) + Math.abs(y - hy) > 0.05
+						Math.abs(x - targetHX) + Math.abs(y - targetHY) > 0.05
 					)
 						moving = true;
 					else {
-						x = hx;
-						y = hy;
+						x = targetHX;
+						y = targetHY;
 						vx = 0;
 						vy = 0;
 					}
@@ -306,27 +313,29 @@ export default function HalftoneWordmark({
 					dots[j + 1] = y;
 					dots[j + 2] = vx;
 					dots[j + 3] = vy;
+				} else {
+					x = targetHX;
+					y = targetHY;
 				}
 
-				const k = hwfWarmth(x, y, hx, hy, 28);
+				const currentRadius = baseRadius * Math.min(1, pVal * 1.25);
+				if (currentRadius <= 0.01) continue;
+
+				const k = hwfWarmth(x, y, targetHX, targetHY, 28);
+				const alpha = Math.min(1, pVal * 1.5);
+
 				ctx.fillStyle =
 					k > 0.02
-						? "rgb(" +
-							Math.round(inkRGB[0] + (warmRGB[0] - inkRGB[0]) * k) +
-							"," +
-							Math.round(inkRGB[1] + (warmRGB[1] - inkRGB[1]) * k) +
-							"," +
-							Math.round(inkRGB[2] + (warmRGB[2] - inkRGB[2]) * k) +
-							")"
-						: o.ink;
+						? `rgba(${Math.round(inkRGB[0] + (warmRGB[0] - inkRGB[0]) * k)}, ${Math.round(inkRGB[1] + (warmRGB[1] - inkRGB[1]) * k)}, ${Math.round(inkRGB[2] + (warmRGB[2] - inkRGB[2]) * k)}, ${alpha})`
+						: `rgba(${inkRGB[0]}, ${inkRGB[1]}, ${inkRGB[2]}, ${alpha})`;
 
 				ctx.beginPath();
-				ctx.arc(x, y, dots[j + 6], 0, 6.2832);
+				ctx.arc(x, y, currentRadius, 0, 6.2832);
 				ctx.fill();
 			}
 
 			if (grainTile && o.grain > 0) {
-				ctx.globalAlpha = Math.min(1, o.grain) * 0.09;
+				ctx.globalAlpha = Math.min(1, o.grain) * 0.09 * pVal;
 				ctx.globalCompositeOperation = "overlay";
 				const pattern = ctx.createPattern(grainTile, "repeat");
 				if (pattern) {
@@ -337,7 +346,7 @@ export default function HalftoneWordmark({
 				ctx.globalCompositeOperation = "source-over";
 			}
 
-			awake = moving || ringAge < 900 || px > -1e4;
+			awake = moving || ringAge < 900 || px > -1e4 || pVal < 1;
 		};
 
 		const loop = (now: number) => {
@@ -351,6 +360,19 @@ export default function HalftoneWordmark({
 			awake = true;
 			if (!raf && visible) raf = requestAnimationFrame(loop);
 		};
+
+		// Event listener so GSAP can update `progress` directly on window event
+		const handleProgressUpdate = (e: CustomEvent<{ progress: number }>) => {
+			if (typeof e.detail?.progress === "number") {
+				opts.current.progress = e.detail.progress;
+				wake();
+			}
+		};
+
+		window.addEventListener(
+			"update-halftone-progress" as any,
+			handleProgressUpdate,
+		);
 
 		const toLocal = (e: PointerEvent) => {
 			const b = canvas.getBoundingClientRect();
@@ -412,6 +434,10 @@ export default function HalftoneWordmark({
 			cancelAnimationFrame(raf);
 			ro.disconnect();
 			io.disconnect();
+			window.removeEventListener(
+				"update-halftone-progress" as any,
+				handleProgressUpdate,
+			);
 			root.removeEventListener("pointermove", onMove);
 			root.removeEventListener("pointerleave", onLeave);
 			root.removeEventListener("pointerdown", onDown);
