@@ -177,7 +177,7 @@ const footerContent = [
           ease: "none",
           scrollTrigger: {
             trigger: footer,
-            start: "top bottom",
+            start: "top 70%",
             end: "bottom bottom",
             scrub: true,
             onRefresh: () => ScrollTrigger.update(),
@@ -186,18 +186,39 @@ const footerContent = [
       );
     }
 
-    // 3. Ultra-Smooth Low-Velocity Infinite Marquee
+    // 3. Halftone Particle Reveal on Scroll (Full Viewport Trigger)
+    if (footer) {
+      const state = { progress: 0 };
+
+      gsap.to(state, {
+        progress: 1,
+        ease: "none",
+        scrollTrigger: {
+          trigger: footer,
+          start: "55% 50%",
+          end: "90% 60%",
+          scrub: 0.5,
+          onUpdate: (self) => {
+            window.dispatchEvent(
+              new CustomEvent("update-halftone-progress", {
+                detail: { progress: self.progress },
+              })
+            );
+          },
+        },
+      });
+    }
+
+    // 4. Ultra-Smooth Low-Velocity Infinite Marquee
     if (marqueeTrack) {
       let currentX = 0;
-      let baseSpeed = 0.8; // Controlled constant speed
+      let baseSpeed = 0.8;
       let scrollVelocity = 0;
       let isHovered = false;
 
-      // Pause continuous movement on hover
       marqueeTrack.addEventListener("mouseenter", () => { isHovered = true; });
       marqueeTrack.addEventListener("mouseleave", () => { isHovered = false; });
 
-      // Low-velocity multiplier (0.008) for slow, elegant scroll interaction
       ScrollTrigger.create({
         onUpdate: (self) => {
           scrollVelocity = self.getVelocity() * 0.008;
@@ -208,16 +229,12 @@ const footerContent = [
         const halfWidth = marqueeTrack.offsetWidth / 2;
         if (!halfWidth) return;
 
-        // Gentle velocity decay
         scrollVelocity *= 0.94;
-
-        // Calculate delta
         const speedMultiplier = isHovered ? 0 : baseSpeed;
         const delta = speedMultiplier + scrollVelocity;
 
         currentX -= delta;
 
-        // Wrap seamlessly around half-width boundary
         if (currentX <= -halfWidth) {
           currentX += halfWidth;
         } else if (currentX > 0) {
