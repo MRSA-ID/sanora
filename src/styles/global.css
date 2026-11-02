@@ -74,6 +74,12 @@
 	--text-service-large: clamp(18px, 2.5vw, 40px);
 	--text-service-small: clamp(14px, 1.389vw, 20px);
 	--text-service-extra-small: clamp(12px, 1vw + 0.5rem, 14px);
+	--text-testi-large: clamp(32px, 6.667vw, 96px);
+	--text-testi-desc: clamp(16px, 1.667vw, 24px);
+	--text-testi-medium: clamp(1rem, 2.22vw, 2rem);
+	--text-testi-small: clamp(12px, 1.389vw, 20px);
+	--text-testi-extra-small: clamp(10px, 1.11vw, 16px);
+	--text-quote: clamp(32px, 4.44vw, 64px);
 	/* clamp(1.5rem, 8.6vw, 7.75rem) 124px */
 	/* clamp(2rem, 6.5vw, 6rem) 96px */
 	--color-sanora-blue-50: #f6f9ff;

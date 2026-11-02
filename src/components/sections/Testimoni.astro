@@ -1,0 +1,159 @@
+---
+import GreenEye from "@assets/gif/green_eye.gif"
+import YellowEye from "@assets/gif/yellow-eye.gif"
+import RedEye from "@assets/gif/red-eye.gif"
+import GreenEyeOld from "@assets/gif/green-old-eye.gif"
+import BlackEye from "@assets/gif/black-eye.gif"
+import BlueEye from "@assets/gif/blue-eye.gif"
+
+const testimonials = [
+  {
+    quote: "Fast learner and can quickly adapt to our system and especially our company works in the maps application.",
+    author: "Ahmad Rayis, Circlegeo",
+    gif: GreenEye,
+    bgColor: "#6fd955",
+    imageClass: "object-[50%_80%]"
+  },
+  {
+    quote: "A full-stack web developer with strong UI/UX instincts, skilled at turning complex requirements into clean, high-performing web solutions.",
+    author: "Gema Aditya Mahendra, Exalter Students",
+    gif: YellowEye,
+    bgColor: "#f5b82e",
+    imageClass: "object-[50%_80%]"
+  },
+  {
+    quote: "Great work, clean code and good personality",
+    author: "Lulu Maulana Malik, Circlegeo",
+    gif: RedEye,
+    bgColor: "#f8563f",
+    imageClass: "object-[50%_75%]"
+  },
+  {
+    quote: "Can work with challenges, proven that the tasks he takes are always heavy tasks.",
+    author: "Naufal Yukafi Ridlo, Freelance",
+    gif: GreenEyeOld,
+    bgColor: "#26694e",
+    imageClass: "object-[50%_80%]"
+  },
+  {
+    quote: "An exceptional front-end developer and collaborative problem-solver who consistently delivers creative solutions in team pairing.",
+    author: "Aldycky Bagus Widjaksana, SUPERSPRING",
+    gif: BlackEye,
+    bgColor: "#0a0b0d",
+    imageClass: "scale-150 origin-[50%_80%]"
+  },
+  {
+    quote: "A skilled front-end developer who transforms UI/UX designs into high-performing web apps, driving seamless user experiences and faster product delivery.",
+    author: "Ageng Permadi, EBP",
+    gif: BlueEye,
+    bgColor: "#5c86f8",
+    imageClass: "scale-150 origin-[50%_80%]"
+  }
+];
+---
+
+<section id="testimoni-container" class="testimoni-container bg-sanora-blue-950 min-h-screen h-full w-full flex flex-col items-center justify-center px-6 sm:px-10 overflow-hidden py-16">
+  <div class="testimonial w-full h-full text-sanora-neutral-25">
+    <div class="w-full max-w-360 mx-auto grid grid-cols-2 pb-16">
+      <div class="w-full">
+        <h1 class="font-newsreader text-testi-large italic pb-5">What They Said</h1>
+        <p class="text-testi-desc">Feedback from the founders, teams, and brands I've collaborated with.</p>
+      </div>
+      <span class="font-montreal font-medium text-testi-medium justify-self-end self-end">Sanora</span>
+    </div>
+    
+    <!-- content marquee testi with side gradient masks -->
+    <div class="testimonial-wrapper-marquee relative w-full overflow-hidden mask-[linear-gradient(to_right,transparent_0%,black_2.5%,black_98%,transparent_100%)]">
+      <div class="marquee-track flex gap-6 w-max animate-marquee hover:[animation-play-state:paused]">
+        <!-- First set of testimonials -->
+        {testimonials.map((item) => (
+          <div 
+            class="max-w-[34.73vw] min-w-[320px] aspect-square w-full h-full relative border-4 border-sanora-neutral-0 rounded-[20px] overflow-hidden shrink-0"
+            style={`background-color: ${item.bgColor};`}
+          >
+            <div class="w-full h-full">
+              <img 
+                src={item.gif.src} 
+                width={item.gif.width} 
+                height={item.gif.height} 
+                alt={item.author} 
+                class={`block aspect-square object-cover ${item.imageClass}`}
+              />
+            </div>
+            
+            <div class="absolute grid grid-rows-2 w-full h-full top-0 bottom-0">
+              <div 
+                class="row-start-2 self-end-safe flex flex-col gap-2.5 font-geist p-5 sm:p-6 w-full h-max"
+                style={`background: linear-gradient(to top, ${item.bgColor} 80%, transparent 100%);`}
+              >
+                <div class="relative pt-3">
+                  <p class="text-testi-small text-sanora-neutral-0 font-semibold leading-[110%] lg:leading-normal lg:tracking-wider relative z-10">
+                    <span class="text-quote font-montreal font-medium text-sanora-neutral-0 absolute -top-6 sm:-top-8 -left-1 sm:-left-2 select-none pointer-events-none leading-none">&ldquo;</span>
+                    {item.quote}
+                  </p>
+                </div>
+                <div class="w-full flex items-center justify-end gap-1.5">
+                  <hr class="border-[0.5] border-sanora-neutral-200 w-5"/>
+                  <span class="text-testi-extra-small font-normal text-sanora-neutral-0">{item.author}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        ))}
+
+        <!-- Duplicated set for seamless loop -->
+        {testimonials.map((item) => (
+          <div 
+            class="max-w-[34.73vw] min-w-[320px] aspect-square w-full h-full relative border-4 border-sanora-neutral-0 rounded-[20px] overflow-hidden shrink-0"
+            aria-hidden="true"
+            style={`background-color: ${item.bgColor};`}
+          >
+            <div class="w-full h-full">
+              <img 
+                src={item.gif.src} 
+                width={item.gif.width} 
+                height={item.gif.height} 
+                alt={item.author} 
+                class={`block aspect-square object-cover ${item.imageClass}`}
+              />
+            </div>
+            
+            <div class="absolute grid grid-rows-2 w-full h-full top-0 bottom-0">
+              <div 
+                class="row-start-2 self-end-safe flex flex-col gap-2.5 font-geist p-5 sm:p-6 w-full h-max"
+                style={`background: linear-gradient(to top, ${item.bgColor} 80%, transparent 100%);`}
+              >
+                <div class="relative pt-3">
+                  
+                  <p class="text-testi-small text-sanora-neutral-0 font-semibold leading-[110%] lg:leading-normal lg:tracking-wider relative z-10">
+                    <span class="text-quote font-montreal font-medium text-sanora-neutral-0 absolute -top-6 sm:-top-8 -left-1 sm:-left-2 select-none pointer-events-none leading-none">&ldquo;</span>
+                    {item.quote}
+                  </p>
+                </div>
+                <div class="w-full flex items-center justify-end gap-1.5">
+                  <hr class="border-[0.5] border-sanora-neutral-200 w-5"/>
+                  <span class="text-testi-extra-small font-normal text-sanora-neutral-0">{item.author}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  @keyframes marquee {
+    0% {
+      transform: translateX(0%);
+    }
+    100% {
+      transform: translateX(-50%);
+    }
+  }
+
+  .animate-marquee {
+    animation: marquee 40s linear infinite;
+  }
+</style>
