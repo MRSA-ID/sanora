@@ -5,14 +5,119 @@ import { getGitHubContributions } from "@/lib/github";
 const contributions = await getGitHubContributions("MRSA-ID");
 ---
 
-<section id="contribute-container" class="contribute-container flex flex-col justify-center items-center min-h-screen h-full sm:h-[200svh] max-w-340 mx-auto px-4 sm:px-8 py-12">
- <div class="w-full text-sanora-blue-950">
+<section id="contribute-container" class="contribute-container flex flex-col justify-start items-center min-h-[200svh] h-full w-full max-w-340 mx-auto px-4 sm:px-8 py-12 relative z-10 will-change-[filter,transform,opacity]">
+ <div id="contribute-header" class="w-full text-sanora-blue-950 will-change-transform opacity-0">
   <p class="font-geist text-sm font-normal uppercase tracking-wider">Github</p>
   <h1 class="font-newsreader text-project-large italic leading-[120%]">Contributor</h1>
  </div>
+ <div id="contribute-skyline-wrapper" class="w-full will-change-transform opacity-0">
   <ContributionSkyline 
     data={contributions.length > 0 ? contributions : undefined} 
     palette="sanora"
     client:load 
   />
+ </div>
 </section>
+
+<script>
+  import { gsap } from "gsap";
+  import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+  gsap.registerPlugin(ScrollTrigger);
+
+  document.addEventListener("DOMContentLoaded", () => {
+    const container = document.getElementById("contribute-container");
+    const header = document.getElementById("contribute-header");
+    const skylineWrapper = document.getElementById("contribute-skyline-wrapper");
+    const testimoniSection = document.getElementById("testimoni-container");
+
+    if (container && header && skylineWrapper) {
+      // 1. Pin Section in place during 200svh scroll duration
+      ScrollTrigger.create({
+        trigger: container,
+        start: "top top",
+        end: "+=200%",
+        pin: true,
+        markers: false,
+        pinSpacing: false,
+      });
+
+      // 2. Header Reveal (Slide Up + Soft Blur Fade)
+      gsap.fromTo(
+        header,
+        { 
+          y: 50, 
+          opacity: 0,
+          filter: "blur(12px)"
+        },
+        {
+          y: 0,
+          opacity: 1,
+          filter: "blur(0px)",
+          duration: 1.2,
+          ease: "power3.out",
+          scrollTrigger: {
+            trigger: container,
+            start: "top 40%",
+            toggleActions: "play none none reverse",
+          },
+        }
+      );
+
+      // 3. Skyline Smooth Blur Reveal
+      gsap.fromTo(
+        skylineWrapper,
+        { 
+          opacity: 0,
+          filter: "blur(16px)",
+          scale: 0.96
+        },
+        {
+          opacity: 1,
+          filter: "blur(0px)",
+          scale: 1,
+          duration: 1.4,
+          delay: 0.15,
+          ease: "power3.out",
+          scrollTrigger: {
+            trigger: container,
+            start: "top 30%",
+            toggleActions: "play none none reverse"
+          },
+        }
+      );
+
+      // 4. Parallax Depth Scrub across extended scroll duration
+      gsap.fromTo(
+        skylineWrapper,
+        { y: 60 },
+        {
+          y: -60,
+          ease: "none",
+          scrollTrigger: {
+            trigger: container,
+            start: "top top",
+            end: "+=200%",
+            scrub: 1.2,
+          },
+        }
+      );
+
+      // 5. Blur & Depth Fade Transition as Testimoni section overlaps from viewport
+      if (testimoniSection) {
+        gsap.to(container, {
+          filter: "blur(20px)",
+          opacity: 0.3,
+          scale: 0.94,
+          ease: "none",
+          scrollTrigger: {
+            trigger: testimoniSection,
+            start: "top bottom", // Starts blurring as Testimoni enters bottom viewport
+            end: "top top",      // Fully blurred when Testimoni reaches top of screen
+            scrub: true,
+          },
+        });
+      }
+    }
+  });
+</script>

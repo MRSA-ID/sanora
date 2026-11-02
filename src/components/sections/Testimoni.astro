@@ -52,9 +52,9 @@ const testimonials = [
 ];
 ---
 
-<section id="testimoni-container" class="testimoni-container bg-sanora-blue-950 min-h-screen h-full sm:h-[200svh] w-full flex flex-col items-center justify-center px-6 sm:px-10 overflow-hidden py-24">
+<section id="testimoni-container" class="testimoni-container bg-sanora-blue-950 min-h-screen h-full sm:h-[200svh] w-full flex flex-col items-center justify-center px-6 sm:px-10 overflow-hidden py-24 relative z-20 shadow-[0_-20px_50px_rgba(0,0,0,0.3)]">
   <div class="testimonial flex flex-col items-center justify-center w-full h-full text-sanora-neutral-25">
-    <div class="w-full max-w-360 mx-auto grid grid-cols-2 pb-16">
+    <div id="testimoni-header" class="w-full max-w-360 mx-auto grid grid-cols-2 pb-16 opacity-0 will-change-transform">
       <div class="w-full">
         <h1 class="font-newsreader text-testi-large italic pb-5">What They Said</h1>
         <p class="text-testi-desc">Feedback from the founders, teams, and brands I've collaborated with.</p>
@@ -63,7 +63,7 @@ const testimonials = [
     </div>
     
     <!-- content marquee testi with side gradient masks -->
-    <div class="testimonial-wrapper-marquee relative w-full overflow-hidden mask-[linear-gradient(to_right,transparent_0%,black_2.5%,black_98%,transparent_100%)]">
+    <div id="testimoni-marquee-wrapper" class="testimonial-wrapper-marquee relative w-full overflow-hidden mask-[linear-gradient(to_right,transparent_0%,black_2.5%,black_98%,transparent_100%)] opacity-0 will-change-transform">
       <div class="marquee-track flex gap-6 w-max animate-marquee hover:[animation-play-state:paused]">
         <!-- First set of testimonials -->
         {testimonials.map((item) => (
@@ -142,6 +142,85 @@ const testimonials = [
     </div>
   </div>
 </section>
+
+<script>
+  import { gsap } from "gsap";
+  import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+  gsap.registerPlugin(ScrollTrigger);
+
+  document.addEventListener("DOMContentLoaded", () => {
+    const section = document.getElementById("testimoni-container");
+    const header = document.getElementById("testimoni-header");
+    const marqueeWrapper = document.getElementById("testimoni-marquee-wrapper");
+
+    if (section && header && marqueeWrapper) {
+      // 1. Smooth Upper Curtain Overlap over pinned Contribute section
+      gsap.fromTo(
+        section,
+        { yPercent: 0 },
+        {
+          yPercent: 0,
+          ease: "none",
+          scrollTrigger: {
+            trigger: section,
+            start: "top bottom",
+            end: "top top",
+            scrub: true,
+            onRefresh: () => ScrollTrigger.update(),
+          },
+        }
+      );
+
+      // 2. Header Reveal
+      gsap.fromTo(
+        header,
+        {
+          y: 50,
+          opacity: 0,
+          filter: "blur(10px)"
+        },
+        {
+          y: 0,
+          opacity: 1,
+          filter: "blur(0px)",
+          duration: 1.2,
+          ease: "power3.out",
+          scrollTrigger: {
+            trigger: section,
+            start: "top 60%",
+            toggleActions: "play none none reverse",
+          }
+        }
+      );
+
+      // 3. Marquee Wrapper Reveal
+      gsap.fromTo(
+        marqueeWrapper,
+        {
+          y: 60,
+          scale: 0.96,
+          opacity: 0,
+          filter: "blur(14px)"
+        },
+        {
+          y: 0,
+          scale: 1,
+          opacity: 1,
+          filter: "blur(0px)",
+          duration: 1.4,
+          delay: 0.15,
+          ease: "power3.out",
+          scrollTrigger: {
+            trigger: section,
+            start: "top 50%",
+            toggleActions: "play none none reverse",
+          }
+        }
+      );
+    }
+  });
+</script>
 
 <style>
   @keyframes marquee {
