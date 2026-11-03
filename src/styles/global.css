@@ -605,7 +605,7 @@ body.is-locked {
 }
 
 .marquee-track {
-	@apply flex gap-6 w-max animate-marquee hover:[animation-play-state:paused];
+	@apply flex gap-6 w-max;
 }
 
 .testimoni-card {
