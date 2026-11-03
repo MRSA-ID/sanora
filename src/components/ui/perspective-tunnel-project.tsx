@@ -175,7 +175,7 @@ function TunnelCard({
 			<div className="group relative h-full w-full overflow-hidden rounded-2xl bg-sanora-blue-900/40 shadow-2xl shadow-sanora-blue-950/80 ring-1 ring-sanora-blue-400/20 backdrop-blur-md transition-all duration-500 hover:ring-sanora-blue-400/70 hover:shadow-sanora-blue-500/30">
 				<img
 					src={card.item.src}
-					alt={card.item.title}
+					alt={card.item.title + "_" + card.index}
 					draggable={false}
 					className="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-110"
 				/>

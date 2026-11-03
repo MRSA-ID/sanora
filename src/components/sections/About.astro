@@ -1,5 +1,6 @@
 ---
 // src/components/sections/About.astro
+import { Image } from "astro:assets";
 import RadialGlow from "@components/RadialGlow.astro";
 import Aws from "@assets/logo/aws.svg";
 import Bnsp from "@assets/logo/bnsp.svg";
@@ -120,7 +121,13 @@ const buttonChars = splitText("About me");
           <div class="flex gap-8 sm:gap-12 md:gap-16 items-center shrink-0">
             {logos.map((logo) => (
               <div class="flex items-center justify-center shrink-0 h-8 sm:h-10 md:h-12 opacity-80 hover:opacity-100 transition-opacity">
-                <img src={logo.src.src} alt={logo.name} class="h-full w-auto object-contain" />
+                <Image 
+                  src={logo.src} 
+                  alt={logo.name} 
+                  loading="lazy" 
+                  decoding="async" 
+                  class="h-full w-auto object-contain" 
+                />
               </div>
             ))}
           </div>
@@ -128,7 +135,13 @@ const buttonChars = splitText("About me");
           <div class="flex gap-8 sm:gap-12 md:gap-16 items-center shrink-0" aria-hidden="true">
             {logos.map((logo) => (
               <div class="flex items-center justify-center shrink-0 h-8 sm:h-10 md:h-12 opacity-80 hover:opacity-100 transition-opacity">
-                <img src={logo.src.src} alt={logo.name} class="h-full w-auto object-contain" />
+                <Image 
+                  src={logo.src} 
+                  alt="" 
+                  loading="lazy" 
+                  decoding="async" 
+                  class="h-full w-auto object-contain" 
+                />
               </div>
             ))}
           </div>

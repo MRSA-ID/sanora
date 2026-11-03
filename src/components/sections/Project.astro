@@ -1,4 +1,6 @@
 ---
+import { Image } from "astro:assets";
+
 import galedi_image_1 from "@assets/projects/galedicorps/1.png"
 import galedi_image_2 from "@assets/projects/galedicorps/2.png"
 import galedi_image_3 from "@assets/projects/galedicorps/3.png"
@@ -40,7 +42,7 @@ interface ProjectItem {
   year: string;
   description: string;
   url: string;
-  images: string[];
+  images: ImageMetadata[];
 }
 
 const projectsData: ProjectItem[] = [
@@ -54,9 +56,9 @@ const projectsData: ProjectItem[] = [
       "Galedi Corps is an enterprise corporate holding group in Indonesia overseeing 10 commercial brands and 3 digital media platforms across 4 strategic business units (SBUs): Fragrance & Wellness, Travel & Hospitality, Experiential Events & Industrial Packaging, and Human Capital Consulting",
     url: "https://www.galedicorps.com/",
     images: [
-      galedi_image_1.src,
-      galedi_image_2.src,
-      galedi_image_3.src,
+      galedi_image_1,
+      galedi_image_2,
+      galedi_image_3,
     ],
   },
   {
@@ -69,9 +71,9 @@ const projectsData: ProjectItem[] = [
       "A generative AI video production combining prompt engineering, AI-assisted visual generation, cinematic sequencing, and post-production to create an immersive opening experience for KPLP's 2026 Technical Working Meeting.",
     url: "none",
     images: [
-      kplp_image_1.src,
-      kplp_image_2.src,
-      kplp_image_3.src,
+      kplp_image_1,
+      kplp_image_2,
+      kplp_image_3,
     ],
   },
   {
@@ -84,8 +86,8 @@ const projectsData: ProjectItem[] = [
       "Designed the official UI/UX web concept for Arkaloka Hospitality, a forward-thinking Indonesian hospitality group introducing the concept of Neosantara—reimagining Indonesian heritage through contemporary design, mindful living, and modern digital experiences.",
     url: "none",
     images: [
-      arkaloka_image_1.src,
-      arkaloka_image_2.src,
+      arkaloka_image_1,
+      arkaloka_image_2,
     ],
   },
   {
@@ -98,9 +100,9 @@ const projectsData: ProjectItem[] = [
       "Designing and developing a digital presence for BomberPest, bringing together visual clarity, intuitive navigation, and responsive frontend implementation to create a professional online experience.",
     url: "https://www.bomberpest.com/",
     images: [
-      bomberpest_image_1.src,
-      bomberpest_image_2.src,
-      bomberpest_image_3.src,
+      bomberpest_image_1,
+      bomberpest_image_2,
+      bomberpest_image_3,
     ],
   },
   {
@@ -113,9 +115,9 @@ const projectsData: ProjectItem[] = [
       "A complete redesign and development of Tamarin Hotel Jakarta's digital presence, combining refined visual design, immersive hospitality imagery, and intuitive interactions to create a seamless online experience for discovering the hotel's rooms, dining, facilities, and event spaces.",
     url: "https://tamarinhoteljakarta.com/",
     images: [
-      tamarin_image_1.src,
-      tamarin_image_2.src,
-      tamarin_image_3.src,
+      tamarin_image_1,
+      tamarin_image_2,
+      tamarin_image_3,
     ],
   },
   {
@@ -128,9 +130,9 @@ const projectsData: ProjectItem[] = [
       "A digital presence designed and developed for Qwerty Service, presenting its technology solutions through a professional interface, Built to strengthen brand credibility and make technology services more accessible to potential customers.",
     url: "https://qwerty-service.vercel.app/",
     images: [
-      qwerty_image_1.src,
-      qwerty_image_2.src,
-      qwerty_image_3.src,
+      qwerty_image_1,
+      qwerty_image_2,
+      qwerty_image_3,
     ],
   },
   {
@@ -143,9 +145,9 @@ const projectsData: ProjectItem[] = [
       "A corporate website designed and developed to establish PT. Indo Rezky Utama's digital presence and strengthen its credibility in the international charcoal briquette market.",
     url: "https://iru-beta.vercel.app/",
     images: [
-      iru_image_1.src,
-      iru_image_2.src,
-      iru_image_3.src,
+      iru_image_1,
+      iru_image_2,
+      iru_image_3,
     ],
   },
   {
@@ -158,8 +160,8 @@ const projectsData: ProjectItem[] = [
       "A custom online ordering platform for Kemayu, designed to simplify product purchases and centralize order management. Featuring QRIS and bank transfer payment options with manual transaction verification, the system gives the owner control over payment confirmation before orders proceed to fulfillment.",
     url: "https://po-system-mocha.vercel.app/",
     images: [
-      kemayu_image_1.src,
-      kemayu_image_2.src,
+      kemayu_image_1,
+      kemayu_image_2,
     ],
   },
   {
@@ -172,9 +174,9 @@ const projectsData: ProjectItem[] = [
       "A modern web application empowering the next generation of leaders to excel in academics, career building, and personal development.",
     url: "https://exalter-ten.vercel.app/",
     images: [
-      exalter_image_1.src,
-      exalter_image_2.src,
-      exalter_image_3.src,
+      exalter_image_1,
+      exalter_image_2,
+      exalter_image_3,
     ],
   },
   {
@@ -187,7 +189,7 @@ const projectsData: ProjectItem[] = [
       "A global digital platform empowering young visionaries through incubation, workshops, and international competitions to turn innovative ideas into reality.",
     url: "https://inventify-center.vercel.app/",
     images: [
-      inventify_image_1.src
+      inventify_image_1
     ],
   },
   {
@@ -200,7 +202,7 @@ const projectsData: ProjectItem[] = [
       "A global digital platform empowering young visionaries through incubation, workshops, and international competitions to turn innovative ideas into reality.",
     url: "https://alpaca-images-generator.vercel.app/",
     images: [
-      codementor_image_1.src
+      codementor_image_1
     ],
   },
   {
@@ -213,7 +215,7 @@ const projectsData: ProjectItem[] = [
       "A complete UI/UX landing page redesign for PT Empat Beruang Perkasa, modernizing their corporate digital presence for enhanced client engagement and brand credibility",
     url: "https://ebp.co.id/",
     images: [
-      ebp_image_1.src
+      ebp_image_1
     ],
   },
   {
@@ -226,7 +228,7 @@ const projectsData: ProjectItem[] = [
       "A complete UI/UX landing page redesign for BFarm, translating their agricultural brand into a modern, high-performance digital experience",
     url: "https://ebp.co.id/",
     images: [
-      bfarm_image_1.src
+      bfarm_image_1
     ],
   },
   {
@@ -239,8 +241,8 @@ const projectsData: ProjectItem[] = [
       "An interactive e-commerce web application that integrates the FakeStoreAPI to provide a real-time experience for exploring and managing a product catalog.",
     url: "https://shopsun-commerce.netlify.app/",
     images: [
-      shopsun_image_1.src,
-      shopsun_image_2.src,
+      shopsun_image_1,
+      shopsun_image_2,
     ],
   },
   {
@@ -253,7 +255,7 @@ const projectsData: ProjectItem[] = [
       "UI/UX design for the CircleGeo company profile, created in Figma using a precise responsive layout approach tailored for Desktop, Tablet, and Android displays.",
     url: "none",
     images: [
-      circlegeo_image_1.src
+      circlegeo_image_1
     ],
   },
 ];
@@ -284,7 +286,7 @@ const titleChars = splitText("Project");
 
     <div class="projects font-geist w-full">
       <!-- Table Header -->
-      <div class="projects-head border-b-[1.5px] border-sanora-blue-900 uppercase pb-2 text-[.6875rem]" aria-hidden="true">
+      <div class="projects-head border-b-[1.5px] border-sanora-blue-900 uppercase pb-2 text-[.6875rem] opacity-0 blur-[10px] translate-y-4 will-change-transform" aria-hidden="true">
         <span>Name</span>
         <span class="hidden md:inline-block">Category</span>
         <span class="hidden md:inline-block">Client</span>
@@ -335,12 +337,13 @@ const titleChars = splitText("Project");
                 </a>
               ) : null}
               <div class="project-images grid pt-8 pb-6 gap-4 grid-cols-1 sm:grid-cols-2 md:grid-cols-3">
-                {item.images.map((imgSrc, imgIdx) => (
+                {item.images.map((imgObj, imgIdx) => (
                   <div class="overflow-hidden rounded-lg bg-sanora-blue-950/10 aspect-video group">
-                    <img
-                      src={imgSrc}
+                    <Image
+                      src={imgObj}
                       alt={`${item.name} screenshot ${imgIdx + 1}`}
                       loading="lazy"
+                      decoding="async"
                       class="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
                     />
                   </div>
@@ -366,12 +369,22 @@ const titleChars = splitText("Project");
 
     ScrollTrigger.refresh();
 
-    // 1. Heading & Intro Character-by-Character Reveal Timeline (Play Once)
+    const projectArticles = section.querySelectorAll<HTMLElement>(".project");
+
+    // 1. Heading, Intro & Table Header Reveal Timeline (Play Once)
     const textTl = gsap.timeline({
       scrollTrigger: {
         trigger: section,
-        start: "top 75%",
+        start: "top 70%",
         once: true,
+      },
+      onComplete: () => {
+        // 2. Trigger Project Rows Entrance after header reveal completes
+        projectArticles.forEach((article, idx) => {
+          gsap.delayedCall(idx * 0.08, () => {
+            article.classList.add("is-in");
+          });
+        });
       },
     });
 
@@ -395,24 +408,22 @@ const titleChars = splitText("Project");
           ease: "power3.out",
         },
         "-=0.4"
+      )
+      .to(
+        ".projects-head",
+        {
+          opacity: 1,
+          y: 0,
+          filter: "blur(0px)",
+          duration: 0.8,
+          ease: "power3.out",
+        },
+        "-=0.3"
       );
 
-    // 2. Project Rows Scroll Entrance (Triggers Only Once)
-    const projectArticles = section.querySelectorAll<HTMLElement>(".project");
-
-    projectArticles.forEach((article, idx) => {
-      ScrollTrigger.create({
-        trigger: article,
-        start: "top 88%",
-        once: true,
-        onEnter: () => {
-          gsap.delayedCall(idx * 0.08, () => {
-            article.classList.add("is-in");
-          });
-        },
-      });
-
-      // 3. Directional Hover Fill Animation
+    // Setup Row Interactions (Hover & Accordion)
+    projectArticles.forEach((article) => {
+      // Directional Hover Fill Animation
       const btn = article.querySelector<HTMLButtonElement>(".project-row");
       if (!btn) return;
 
@@ -443,7 +454,7 @@ const titleChars = splitText("Project");
         }
       });
 
-      // 4. Accordion Toggle
+      // Accordion Toggle
       btn.addEventListener("click", () => {
         const isOpen = article.classList.contains("is-open");
 
