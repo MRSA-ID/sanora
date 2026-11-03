@@ -2,30 +2,8 @@
 // src/components/sections/About.astro
 import { Image } from "astro:assets";
 import RadialGlow from "@components/RadialGlow.astro";
-import Aws from "@assets/logo/aws.svg";
-import Bnsp from "@assets/logo/bnsp.svg";
-import Cisco from "@assets/logo/cisco.svg";
-import Dicoding from "@assets/logo/dicoding.svg";
-import Digitalent from "@assets/logo/digitalent.svg";
-import Freecodecamp from "@assets/logo/freecodecamp.svg";
-import Hacktive8 from "@assets/logo/hacktive8.svg";
-import Komdigi from "@assets/logo/komdigi.svg";
-import progate from "@assets/logo/progate.svg";
-import Shoope from "@assets/logo/shoope.svg";
 import CV from "@assets/Software Engineer CV.pdf";
-
-const logos = [
-  { name: "AWS", src: Aws },
-  { name: "BNSP", src: Bnsp },
-  { name: "Cisco", src: Cisco },
-  { name: "Dicoding", src: Dicoding },
-  { name: "Digitalent", src: Digitalent },
-  { name: "freeCodeCamp", src: Freecodecamp },
-  { name: "Hacktiv8", src: Hacktive8 },
-  { name: "Komdigi", src: Komdigi },
-  { name: "Progate", src: progate },
-  { name: "Shopee", src: Shoope },
-];
+import { logos } from "@/data/logos";
 
 const splitText = (text: string) => {
   return text.split("").map((char) => (char === " " ? "\u00A0" : char));
