@@ -309,7 +309,7 @@ body.is-locked {
 
 /* about */
 .about-container {
-	@apply font-montreal relative z-10 bg-sanora-blue-950 text-sanora-neutral-50 min-h-[150vh] w-full mx-auto overflow-hidden;
+	@apply max-w-[900px] rounded-[32px] font-montreal relative z-10 bg-sanora-blue-950 text-sanora-neutral-50 min-h-[150vh] w-full mx-auto overflow-hidden;
 	will-change: width, max-width, border-radius, transform;
 }
 
@@ -324,6 +324,14 @@ body.is-locked {
 /* Glassmorphic layer inherits parent border-radius and width */
 .glassmorphic-container {
 	@apply relative z-10 w-full h-full min-h-[150vh] flex flex-col justify-center-safe items-center gap-14 p-12 md:px-20 md:pt-32 bg-white/5 backdrop-blur-2xl rounded-[inherit];
+}
+
+.about-content-inner {
+	@apply flex flex-col justify-center-safe items-center gap-14 w-full h-full;
+}
+
+.about-content-headline {
+	@apply flex flex-col gap-8 justify-center items-center text-center;
 }
 
 .about-label {

@@ -39,7 +39,7 @@ const buttonChars = splitText("About me");
 
 <section
   id="about-container"
-  class="about-container relative z-10 mx-auto w-[90%] max-w-[900px] min-h-[150vh] overflow-hidden rounded-[32px]"
+  class="about-container"
 >
   <!-- Background Radial Glows -->
   <div class="glow-layer-left parallax-glow" data-parallax-speed="-80">
@@ -56,11 +56,10 @@ const buttonChars = splitText("About me");
   </div>
 
   <!-- Glassmorphic Layer -->
-  <div class="glassmorphic-container w-full h-full rounded-[inherit]">
+  <div class="glassmorphic-container">
     <!-- Inner Content Wrapper -->
-    <div class="about-content-inner flex flex-col justify-center-safe items-center gap-14 w-full h-full">
-      
-      <div class="flex flex-col gap-8 justify-center items-center text-center">
+    <div class="about-content-inner">
+      <div class="about-content-headline ">
         <!-- 01 / IDENTITY Label -->
         <span class="reveal-identity about-label">
           {identityChars.map((char) => (
@@ -72,14 +71,14 @@ const buttonChars = splitText("About me");
           <!-- Headline Line 1 -->
           <p class="reveal-line1 inline-flex overflow-hidden">
             {line1Chars.map((char) => (
-              <span class="char inline-block opacity-0 blur-[12px] translate-y-8">{char}</span>
+              <span class="char inline-block opacity-0 blur-md translate-y-8">{char}</span>
             ))}
           </p>
 
           <!-- Headline Line 2 -->
           <p class="reveal-line2 inline-flex overflow-hidden">
             {line2Chars.map((char) => (
-              <span class="char inline-block opacity-0 blur-[12px] translate-y-8">{char}</span>
+              <span class="char inline-block opacity-0 blur-md translate-y-8">{char}</span>
             ))}
           </p>
         </h1>
@@ -151,7 +150,7 @@ const buttonChars = splitText("About me");
   </div>
 
   <!-- Bottom Blur Gradient Overlay -->
-  <div class="pointer-events-none absolute bottom-0 inset-x-0 h-32 z-20 bg-gradient-to-b from-transparent via-sanora-blue-950/60 to-sanora-blue-950 backdrop-blur-sm [mask-image:linear-gradient(to_bottom,transparent_0%,black_100%)]"></div>
+  <div class="pointer-events-none absolute bottom-0 inset-x-0 h-32 z-20 bg-linear-to-b from-transparent via-sanora-blue-950/60 to-sanora-blue-950 backdrop-blur-sm mask-[linear-gradient(to_bottom,transparent_0%,black_100%)]"></div>
 
 </section>
 
