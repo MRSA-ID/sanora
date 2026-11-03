@@ -191,7 +191,7 @@ const servicesData = [
   import { ScrollTrigger } from "gsap/ScrollTrigger";
 
   gsap.registerPlugin(ScrollTrigger);
-
+  
   document.addEventListener("DOMContentLoaded", () => {
     const wrapper = document.querySelector<HTMLElement>(".services-wrapper");
     if (!wrapper) return;
@@ -227,9 +227,11 @@ const servicesData = [
           const tl = gsap.timeline({
             scrollTrigger: {
               trigger: row,
+              pinnedContainer: "#services-container",
               start: `bottom center+=${halfImgHeight}px`,
               end: `bottom center-=${halfImgHeight}px`,
               scrub: true,
+              markers:false,
               invalidateOnRefresh: true,
             },
             defaults: { ease: "none" },
@@ -259,6 +261,11 @@ const servicesData = [
       });
     });
 
+    window.addEventListener("load", () => {
+      ScrollTrigger.sort();
+      ScrollTrigger.refresh();
+    });
+    
     // Recalculate layout triggers on window resize
     window.addEventListener("resize", () => {
       ScrollTrigger.refresh();

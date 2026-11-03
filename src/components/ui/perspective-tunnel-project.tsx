@@ -11,45 +11,54 @@ import {
 import { useEffect, useRef, useState } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import bomberpestImg from "@assets/projects/bomberpest/1.png";
+import tamarinImg from "@assets/projects/tamarin/1.png";
+import qwertyImg from "@assets/projects/qwerty/1.png";
+import galedicorpsImg from "@assets/projects/galedicorps/1.png";
+import iruImg from "@assets/projects/iru/1.png";
+import arkalokaImg from "@assets/projects/arkaloka/1.png";
+import arkalokaBImg from "@assets/projects/arkaloka/2.png";
+import bfarmImg from "@assets/projects/bfarm/1.png";
+import ebpImg from "@assets/projects/ebp/1.png";
 
 gsap.registerPlugin(ScrollTrigger);
 
 const IMAGES = [
 	{
-		src: "https://cdn.21st.dev/assets/mirror/c3/c3fbd2afa140223999a441b32ed986f61d473930002708df805a81532a326aac.jpg",
-		title: "Chroma I",
+		src: bomberpestImg.src,
+		title: "Bomberpest_Image_project",
 	},
 	{
-		src: "https://cdn.21st.dev/assets/mirror/9d/9d8b2f675a5814476ada3736ce439bcda23c5c389e0ebf9b25d8a0c09f3bbcfe.jpg",
-		title: "Prism III",
+		src: tamarinImg.src,
+		title: "Tamarin_Image_project",
 	},
 	{
-		src: "https://cdn.21st.dev/assets/mirror/8b/8bb738bf2f00d7f7ed3c3ec034adb9938ad38f4be4ac191d632a6a11ad525574.jpg",
-		title: "Ether IV",
+		src: qwertyImg.src,
+		title: "Qwerty_Image_project",
 	},
 	{
-		src: "https://cdn.21st.dev/assets/mirror/ac/ac5ac700b188d7ef16ee9dab868098b59f15c440db3f71d4e8c03262a3287577.jpg",
-		title: "Quantum V",
+		src: galedicorpsImg.src,
+		title: "Galedicorps_Image_project",
 	},
 	{
-		src: "https://cdn.21st.dev/assets/mirror/ef/ef25eff6ce655fba459b3b7e7711524dc92499aa18f6c7dbea9a0fcc56a8f908.jpg",
-		title: "Nebula VI",
+		src: iruImg.src,
+		title: "Iru_Image_project",
 	},
 	{
-		src: "https://cdn.21st.dev/assets/mirror/f2/f28b370a5dcbf76240f1504579c4b05fc0ff0bb990a42aff8dc2f73a5dc46072.jpg",
-		title: "Cyber VII",
+		src: arkalokaImg.src,
+		title: "Arkaloka_Image_project",
 	},
 	{
-		src: "https://cdn.21st.dev/assets/mirror/f2/f26a1eac85704dda924820392dedfb72d51d8261d35354f83b35d683617295f3.jpg",
-		title: "Flux VIII",
+		src: arkalokaBImg.src,
+		title: "Arkaloka_b_Image_project",
 	},
 	{
-		src: "https://cdn.21st.dev/assets/mirror/77/7755d23eaaa0aa5b403343f44afa7a29b2d06d3065fe54c602b14ba01d00f2aa.jpg",
-		title: "Aether IX",
+		src: bfarmImg.src,
+		title: "bfarm_Image_project",
 	},
 	{
-		src: "https://cdn.21st.dev/assets/mirror/65/657317761fe9058a1d43711b13c543a71eb5199b7a5d9abf4c28479674e39cf7.jpg",
-		title: "Chroma X",
+		src: ebpImg.src,
+		title: "Ebp_Image_project",
 	},
 ];
 
@@ -162,7 +171,7 @@ function TunnelCard({
 				opacity,
 				zIndex: card.index + 1,
 			}}
-			className="pointer-events-auto absolute left-1/2 top-1/2 aspect-[4/5] will-change-transform select-none cursor-pointer">
+			className="pointer-events-auto absolute left-1/2 top-1/2 aspect-16/9 will-change-transform select-none cursor-pointer">
 			<div className="group relative h-full w-full overflow-hidden rounded-2xl bg-sanora-blue-900/40 shadow-2xl shadow-sanora-blue-950/80 ring-1 ring-sanora-blue-400/20 backdrop-blur-md transition-all duration-500 hover:ring-sanora-blue-400/70 hover:shadow-sanora-blue-500/30">
 				<img
 					src={card.item.src}
@@ -170,11 +179,6 @@ function TunnelCard({
 					draggable={false}
 					className="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-110"
 				/>
-				<div className="absolute inset-0 bg-gradient-to-t from-sanora-blue-950/90 via-sanora-blue-950/20 to-transparent flex items-end p-4 sm:p-5">
-					<span className="text-xs sm:text-sm font-geist tracking-widest uppercase text-sanora-neutral-50 drop-shadow-md">
-						{card.item.title}
-					</span>
-				</div>
 			</div>
 		</motion.div>
 	);

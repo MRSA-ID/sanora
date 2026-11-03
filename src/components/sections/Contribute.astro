@@ -35,7 +35,7 @@ const contributions = await getGitHubContributions("MRSA-ID");
       // 1. Pin Section in place during 200svh scroll duration
       ScrollTrigger.create({
         trigger: container,
-        start: "top top",
+        start: "1.5% top",
         end: "+=200%",
         pin: true,
         markers: false,
@@ -96,7 +96,7 @@ const contributions = await getGitHubContributions("MRSA-ID");
           ease: "none",
           scrollTrigger: {
             trigger: container,
-            start: "top top",
+            start: "1.5% top",
             end: "+=200%",
             scrub: 1.2,
           },

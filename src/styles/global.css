@@ -506,7 +506,7 @@ body.is-locked {
 }
 
 .services-wrapper .sticky-image-track {
-	@apply pointer-events-none absolute inset-0 z-10 hidden w-full grid-cols-[0.5fr_1fr] md:grid;
+	@apply pointer-events-none absolute inset-0 z-0 hidden w-full grid-cols-[0.5fr_1fr] md:grid;
 }
 
 .services-wrapper .sticky-image-container {
