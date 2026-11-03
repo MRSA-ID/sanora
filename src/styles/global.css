@@ -648,3 +648,69 @@ body.is-locked {
 	@apply text-testi-extra-small font-normal text-sanora-neutral-0;
 }
 /* end Testimoni */
+
+/* footer */
+.footer-container {
+	@apply flex flex-col w-full min-h-screen h-full font-geist text-sanora-blue-950 justify-center sm:justify-start px-4 sm:px-10 pt-6 pb-11 gap-10 overflow-hidden relative z-0;
+}
+
+.footer-marquee-wrapper {
+	@apply relative w-full overflow-hidden mask-[linear-gradient(to_right,transparent_0%,black_2.5%,black_97.5%,transparent_100%)] select-none;
+}
+
+.footer-marquee-track {
+	@apply flex w-max whitespace-nowrap will-change-transform;
+}
+
+.footer-marquee-track div {
+	@apply flex items-center gap-8 pr-8;
+}
+
+.footer-marquee-track div span {
+	@apply font-montreal text-footer-large font-normal leading-none;
+}
+
+.footer-content-container {
+	@apply flex flex-col gap-25;
+}
+
+.footer-content-wrapper {
+	@apply grid grid-cols-2 md:grid-cols-[minmax(0,463px)_1fr_1fr_1fr_auto] gap-x-12.75 gap-y-6;
+}
+
+.footer-content-wrapper h2 {
+	@apply w-full col-span-2 md:col-span-1 max-w-116 text-footer-title-large font-medium leading-[100%];
+}
+
+.footer-content-wrapper button {
+	@apply row-start-2 col-start-2 md:row-start-1 md:col-start-5 w-max h-full flex items-center justify-center place-self-end-safe md:place-self-start max-h-20 border! border-sanora-blue-950! px-4 py-6 rounded-4xl cursor-pointer transition-all duration-300 ease-out hover:-translate-y-1 active:scale-95;
+}
+
+.footer-content {
+	@apply w-full text-footer-extra-small;
+}
+
+.footer-content h2 {
+	@apply font-bold pb-6;
+}
+
+.footer-list {
+	@apply list-none space-y-4;
+}
+
+.footer-list li a {
+	@apply relative inline-block transition-transform duration-300 hover:translate-x-1 after:absolute after:bottom-0 after:left-0 after:h-[1px] after:w-0 hover:after:w-full after:bg-sanora-blue-950 after:transition-all after:duration-300;
+}
+
+.footer-copyright {
+	@apply w-full flex flex-col sm:flex-row justify-between text-footer-extra-small;
+}
+
+.footer-copyright div {
+	@apply flex gap-1;
+}
+
+.footer-wordmark-wrapper {
+	@apply w-full absolute bottom-0 left-0;
+}
+/* end footer */

@@ -65,33 +65,33 @@ const footerContent = [
 ]
 ---
 
-<footer id="footer-reveal" class="flex flex-col w-full min-h-screen h-full font-geist text-sanora-blue-950 justify-center sm:justify-start px-4 sm:px-10 pt-6 pb-11 gap-10 overflow-hidden relative z-0">
+<footer id="footer-reveal" class="footer-container">
  <!-- marquee text -->
- <div class="footer-marquee-wrapper relative w-full overflow-hidden mask-[linear-gradient(to_right,transparent_0%,black_2.5%,black_97.5%,transparent_100%)] select-none">
-  <div id="footer-marquee-track" class="footer-marquee-track flex w-max whitespace-nowrap will-change-transform">
+ <div class="footer-marquee-wrapper">
+  <div id="footer-marquee-track" class="footer-marquee-track">
    <!-- First Track -->
-   <div class="flex items-center gap-8 pr-8">
-    <span class="font-montreal text-footer-large font-normal leading-none">/ Get in touch</span>
-    <span class="font-montreal text-footer-large font-normal leading-none">/ Get in touch</span>
-    <span class="font-montreal text-footer-large font-normal leading-none">/ Get in touch</span>
+   <div >
+    <span>/ Get in touch</span>
+    <span>/ Get in touch</span>
+    <span>/ Get in touch</span>
    </div>
    <!-- Duplicate Track for Seamless Loop -->
-   <div class="flex items-center gap-8 pr-8" aria-hidden="true">
-    <span class="font-montreal text-footer-large font-normal leading-none">/ Get in touch</span>
-    <span class="font-montreal text-footer-large font-normal leading-none">/ Get in touch</span>
-    <span class="font-montreal text-footer-large font-normal leading-none">/ Get in touch</span>
+   <div aria-hidden="true">
+    <span>/ Get in touch</span>
+    <span>/ Get in touch</span>
+    <span>/ Get in touch</span>
    </div>
   </div>
  </div>
  
- <div class="flex flex-col gap-25">
-  <div class="grid grid-cols-2 md:grid-cols-[minmax(0,463px)_1fr_1fr_1fr_auto] gap-x-12.75 gap-y-6">
-   <h2 class="w-full col-span-2 md:col-span-1 max-w-116 text-footer-title-large font-medium leading-[100%]">The next good thing starts here</h2>
+ <div class="footer-content-container">
+  <div class="footer-content-wrapper">
+   <h2>The next good thing starts here</h2>
    {
     footerContent.map((content,i)=>(
-    <div class="w-full text-footer-extra-small">
-     <h2 class="font-bold pb-6">{content.title}</h2>
-     <div class="list-none space-y-4">
+    <div class="footer-content">
+     <h2>{content.title}</h2>
+     <div class="footer-list">
       {content.item.map((list,index)=>(
        list.link === null ? 
        <li class="opacity-80">{list.title}</li>
@@ -99,7 +99,6 @@ const footerContent = [
        <li class="w-max">
          <a 
            href={list.link} 
-           class="relative inline-block transition-transform duration-300 hover:translate-x-1 after:absolute after:bottom-0 after:left-0 after:h-[1px] after:w-0 hover:after:w-full after:bg-sanora-blue-950 after:transition-all after:duration-300"
          >
            {list.title}
          </a>
@@ -112,20 +111,21 @@ const footerContent = [
    <button 
     id="scroll-to-top"
     aria-label="Back to top"
-    class="group button-to-top row-start-2 col-start-2 md:row-start-1 md:col-start-5 w-max h-full flex items-center justify-center place-self-end-safe md:place-self-start max-h-20 border! border-sanora-blue-950! px-4 py-6 rounded-4xl cursor-pointer transition-all duration-300 ease-out hover:-translate-y-1 active:scale-95"
+    class="group button-to-top "
    >
     <ArrowUp class='size-6 group-hover:animate-bounce transition-transform duration-300' />
    </button>
   </div>
-  <div class="w-full flex flex-col sm:flex-row justify-between text-footer-extra-small">
-   <div class="flex gap-1">
+
+  <div class="footer-copyright">
+   <div>
     <p class="font-medium"><span>©</span>SNR 2026 <span>sanggisda@gmail.com</span></p>
    </div>
    <span>DESIGNED WITH INTENTION.</span>
   </div>
 
   <!-- Halftone Canvas Wordmark Section -->
-  <div class="w-full absolute bottom-0 left-0">
+  <div class="footer-wordmark-wrapper">
    <HalftoneWordmark 
      wordmark="SANORA" 
      background="#fafaf8" 
