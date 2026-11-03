@@ -1615,7 +1615,7 @@ export default function ContributionSkyline({
 						<canvas
 							ref={canvasRef}
 							tabIndex={0}
-							role="img"
+							role="application"
 							aria-label={
 								nf.format(stats.total) +
 								" " +
