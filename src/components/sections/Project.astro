@@ -270,23 +270,23 @@ const introChars = splitText(
 const titleChars = splitText("Project");
 ---
 
-<section id="project-container" class="project-container flex flex-col w-full max-w-360 h-max px-6 sm:px-10 py-16 sm:py-24 bg-sanora-neutral-50 text-sanora-blue-950 font-geist mx-auto gap-12 sm:gap-20">
-  <p class="project-intro font-normal text-2xl sm:text-[32px] text-justify leading-snug inline-flex flex-wrap overflow-hidden">
+<section id="project-container" class="project-container">
+  <p class="project-intro">
     {introChars.map((char) => (
       <span class="char inline-block opacity-0 blur-[10px] translate-y-6">{char}</span>
     ))}
   </p>
 
   <div class="flex flex-col gap-7">
-    <h1 class="project-title font-newsreader text-project-large italic inline-flex overflow-hidden">
+    <h1 class="project-title">
       {titleChars.map((char) => (
         <span class="char inline-block opacity-0 blur-[12px] translate-y-8">{char}</span>
       ))}
     </h1>
 
-    <div class="projects font-geist w-full">
+    <div class="projects">
       <!-- Table Header -->
-      <div class="projects-head border-b-[1.5px] border-sanora-blue-900 uppercase pb-2 text-[.6875rem] opacity-0 blur-[10px] translate-y-4 will-change-transform" aria-hidden="true">
+      <div class="projects-head" aria-hidden="true">
         <span>Name</span>
         <span class="hidden md:inline-block">Category</span>
         <span class="hidden md:inline-block">Client</span>
@@ -295,40 +295,40 @@ const titleChars = splitText("Project");
 
       <!-- Projects Dynamic Loop -->
       {projectsData.map((item, index) => (
-        <article class="project text-[.9375rem] relative" data-project-index={index}>
+        <article class="project" data-project-index={index}>
           <button
             type="button"
             aria-controls={item.id}
-            class="project-row relative grid w-full text-left cursor-pointer isolate border-0 overflow-hidden select-none"
+            class="project-row"
             aria-expanded="false"
           >
             <!-- Hover Background Fill Layer -->
-            <span class="project-bg z-0 bg-sanora-blue-950 absolute" aria-hidden="true"></span>
+            <span class="project-bg" aria-hidden="true"></span>
 
             <!-- Table Cells -->
-            <span class="project-cell isolate z-1 block relative overflow-hidden" style="--i: 0">
+            <span class="project-cell block" style="--i: 0">
               <span class="project-text block font-medium">{item.name}</span>
             </span>
-            <span class="project-cell projects-col--wide isolate z-1 hidden md:block relative overflow-hidden" style="--i: 1">
+            <span class="project-cell projects-col--wide hidden md:block" style="--i: 1">
               <span class="project-text block">{item.category}</span>
             </span>
-            <span class="project-cell projects-col--wide isolate z-1 hidden md:block relative overflow-hidden" style="--i: 2">
+            <span class="project-cell projects-col--wide hidden md:block" style="--i: 2">
               <span class="project-text block">{item.client}</span>
             </span>
-            <span class="project-cell projects-year isolate z-1 block relative overflow-hidden" style="--i: 3">
+            <span class="project-cell projects-year block" style="--i: 3">
               <span class="project-text block text-right font-mono">{item.year}</span>
             </span>
           </button>
 
           <!-- Accordion Collapsible Body -->
           <div class="project-body grid" inert id={item.id}>
-            <div class="project-inner min-h-0 overflow-hidden">
-              <p class="project-desc max-w-[32em] pt-[1em]">
+            <div class="project-inner">
+              <p class="project-desc">
                 {item.description}
               </p>
               {item.url !== "none" ? (
                 <a
-                  class="project-link mt-[1rem] text-[.9375rem] inline-block font-medium hover:text-sanora-blue-700 transition-colors"
+                  class="project-link"
                   href={item.url}
                   target="_blank"
                   rel="noopener"
@@ -336,9 +336,9 @@ const titleChars = splitText("Project");
                   See website
                 </a>
               ) : null}
-              <div class="project-images grid pt-8 pb-6 gap-4 grid-cols-1 sm:grid-cols-2 md:grid-cols-3">
+              <div class="project-images">
                 {item.images.map((imgObj, imgIdx) => (
-                  <div class="overflow-hidden rounded-lg bg-sanora-blue-950/10 aspect-video group">
+                  <div class="group">
                     <Image
                       src={imgObj}
                       alt={`${item.name} screenshot ${imgIdx + 1}`}

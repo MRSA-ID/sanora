@@ -352,12 +352,26 @@ body.is-locked {
 /* end about */
 
 /* projects */
+.project-container {
+	@apply flex flex-col w-full max-w-360 h-max px-6 sm:px-10 py-16 sm:py-24 bg-sanora-neutral-50 text-sanora-blue-950 font-geist mx-auto gap-12 sm:gap-20;
+}
+
+.project-intro {
+	@apply font-normal text-2xl sm:text-[32px] text-justify leading-snug inline-flex flex-wrap overflow-hidden;
+}
+
+.project-title {
+	@apply font-newsreader text-project-large italic inline-flex overflow-hidden;
+}
+
 .projects {
+	@apply font-geist w-full;
 	--row-pad: 10px;
 	--cols: minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1fr) auto;
 }
 
 .projects-head {
+	@apply border-b-[1.5px] border-sanora-blue-900 uppercase pb-2 text-[.6875rem] opacity-0 blur-[10px] translate-y-4 will-change-transform;
 	display: grid;
 	line-height: 14px;
 	letter-spacing: 0.02em;
@@ -365,6 +379,7 @@ body.is-locked {
 }
 
 .project {
+	@apply text-[.9375rem] relative;
 	line-height: 20px;
 }
 
@@ -386,6 +401,7 @@ body.is-locked {
 }
 
 .project-row {
+	@apply relative grid w-full text-left cursor-pointer isolate border-0 overflow-hidden select-none;
 	padding: var(--row-pad) 0;
 	grid-template-columns: var(--cols);
 	background: transparent;
@@ -394,6 +410,7 @@ body.is-locked {
 
 /* Hover Fill Overlay Glitch-Free */
 .project-bg {
+	@apply z-0 bg-sanora-blue-950 absolute;
 	inset: 0;
 	width: 100%;
 	height: 100%;
@@ -429,6 +446,7 @@ body.is-locked {
 
 /* Project Cell Base Styling & Explicit Transition */
 .project-cell {
+	@apply isolate z-1 relative overflow-hidden;
 	box-sizing: border-box;
 	transition:
 		color 0.2s,
@@ -474,6 +492,14 @@ body.is-locked {
 	transition: grid-template-rows 0.5s cubic-bezier(0.33, 1, 0.68, 1);
 }
 
+.project-inner {
+	@apply min-h-0 overflow-hidden;
+}
+
+.project-desc {
+	@apply max-w-[32em] pt-[1em];
+}
+
 .project.is-open .project-body {
 	grid-template-rows: 1fr;
 }
@@ -485,8 +511,17 @@ body.is-locked {
 }
 
 .project-link {
+	@apply text-[.9375rem] mt-[1rem]  inline-block font-medium hover:text-sanora-blue-700 transition-colors;
 	text-underline-offset: 0.15em;
 	text-decoration: underline;
+}
+
+.project-images {
+	@apply grid pt-8 pb-6 gap-4 grid-cols-1 sm:grid-cols-2 md:grid-cols-3;
+}
+
+.project-images div {
+	@apply overflow-hidden rounded-lg bg-sanora-blue-950/10 aspect-video;
 }
 
 .projects__year {
