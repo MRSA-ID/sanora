@@ -52,26 +52,26 @@ const testimonials = [
 ];
 ---
 
-<section id="testimoni-container" class="testimoni-container bg-sanora-blue-950 min-h-screen h-full sm:h-[200svh] w-full flex flex-col items-center justify-center px-6 sm:px-10 overflow-hidden py-24 relative z-20 shadow-[0_-20px_50px_rgba(0,0,0,0.3)]">
-  <div class="testimonial flex flex-col items-center justify-center w-full h-full text-sanora-neutral-25">
-    <div id="testimoni-header" class="w-full max-w-360 mx-auto grid grid-cols-2 pb-16 opacity-0 will-change-transform">
+<section id="testimoni-container" class="testimoni-container">
+  <div class="testimonial">
+    <div id="testimoni-header" class="testimoni-header">
       <div class="w-full">
-        <h1 class="font-newsreader text-testi-large italic pb-5">What They Said</h1>
+        <h1>What They Said</h1>
         <p class="text-testi-desc">Feedback from the founders, teams, and brands I've collaborated with.</p>
       </div>
-      <span class="font-montreal font-medium text-testi-medium justify-self-end self-end">Sanora</span>
+      <span>Sanora</span>
     </div>
     
     <!-- content marquee testi with side gradient masks -->
-    <div id="testimoni-marquee-wrapper" class="testimonial-wrapper-marquee relative w-full overflow-hidden mask-[linear-gradient(to_right,transparent_0%,black_2.5%,black_98%,transparent_100%)] opacity-0 will-change-transform">
-      <div class="marquee-track flex gap-6 w-max animate-marquee hover:[animation-play-state:paused]">
+    <div id="testimoni-marquee-wrapper" class="testimonial-wrapper-marquee">
+      <div class="marquee-track">
         <!-- First set of testimonials -->
         {testimonials.map((item) => (
           <div 
-            class="max-w-[34.73vw] min-w-[320px] aspect-square w-full h-full relative border-4 border-sanora-neutral-0 rounded-[20px] overflow-hidden shrink-0"
+            class="testimoni-card"
             style={`background-color: ${item.bgColor};`}
           >
-            <div class="w-full h-full">
+            <div class="testimoni-wrapper-img">
               <img 
                 src={item.gif.src} 
                 width={item.gif.width} 
@@ -81,20 +81,20 @@ const testimonials = [
               />
             </div>
             
-            <div class="absolute grid grid-rows-2 w-full h-full top-0 bottom-0">
+            <div class="testimoni-desc-container">
               <div 
-                class="row-start-2 self-end-safe flex flex-col gap-2.5 font-geist p-5 sm:p-6 w-full h-max"
+                class="testimoni-desc-wrapper"
                 style={`background: linear-gradient(to top, ${item.bgColor} 80%, transparent 100%);`}
               >
-                <div class="relative pt-3">
-                  <p class="text-testi-small text-sanora-neutral-0 font-semibold leading-[110%] lg:leading-normal lg:tracking-wider relative z-10">
-                    <span class="text-quote font-montreal font-medium text-sanora-neutral-0 absolute -top-6 sm:-top-8 -left-1 sm:-left-2 select-none pointer-events-none leading-none">&ldquo;</span>
+                <div class="testimoni-quote-wrapper">
+                  <p>
+                    <span>&ldquo;</span>
                     {item.quote}
                   </p>
                 </div>
-                <div class="w-full flex items-center justify-end gap-1.5">
-                  <hr class="border-[0.5] border-sanora-neutral-200 w-5"/>
-                  <span class="text-testi-extra-small font-normal text-sanora-neutral-0">{item.author}</span>
+                <div class="testimoni-author-wrapper">
+                  <hr />
+                  <span >{item.author}</span>
                 </div>
               </div>
             </div>
@@ -104,11 +104,11 @@ const testimonials = [
         <!-- Duplicated set for seamless loop -->
         {testimonials.map((item) => (
           <div 
-            class="max-w-[34.73vw] min-w-[320px] aspect-square w-full h-full relative border-4 border-sanora-neutral-0 rounded-[20px] overflow-hidden shrink-0"
+            class="testimoni-card"
             aria-hidden="true"
             style={`background-color: ${item.bgColor};`}
           >
-            <div class="w-full h-full">
+            <div class="testimoni-wrapper-img">
               <img 
                 src={item.gif.src} 
                 width={item.gif.width} 
@@ -118,21 +118,20 @@ const testimonials = [
               />
             </div>
             
-            <div class="absolute grid grid-rows-2 w-full h-full top-0 bottom-0">
+            <div class="testimoni-desc-container">
               <div 
-                class="row-start-2 self-end-safe flex flex-col gap-2.5 font-geist p-5 sm:p-6 w-full h-max"
+                class="testimoni-desc-wrapper"
                 style={`background: linear-gradient(to top, ${item.bgColor} 80%, transparent 100%);`}
               >
-                <div class="relative pt-3">
-                  
-                  <p class="text-testi-small text-sanora-neutral-0 font-semibold leading-[110%] lg:leading-normal lg:tracking-wider relative z-10">
-                    <span class="text-quote font-montreal font-medium text-sanora-neutral-0 absolute -top-6 sm:-top-8 -left-1 sm:-left-2 select-none pointer-events-none leading-none">&ldquo;</span>
+                <div class="testimoni-quote-wrapper">
+                  <p>
+                    <span>&ldquo;</span>
                     {item.quote}
                   </p>
                 </div>
-                <div class="w-full flex items-center justify-end gap-1.5">
-                  <hr class="border-[0.5] border-sanora-neutral-200 w-5"/>
-                  <span class="text-testi-extra-small font-normal text-sanora-neutral-0">{item.author}</span>
+                <div class="testimoni-author-wrapper">
+                  <hr/>
+                  <span>{item.author}</span>
                 </div>
               </div>
             </div>

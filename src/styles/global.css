@@ -578,3 +578,73 @@ body.is-locked {
 	@apply w-full will-change-transform opacity-0;
 }
 /* end contribute */
+
+/* Testimoni */
+.testimoni-container {
+	@apply bg-sanora-blue-950 min-h-screen h-full sm:h-[200svh] w-full flex flex-col items-center justify-center px-6 sm:px-10 overflow-hidden py-24 relative z-20 shadow-[0_-20px_50px_rgba(0,0,0,0.3)];
+}
+
+.testimoni-container .testimonial {
+	@apply flex flex-col items-center justify-center w-full h-full text-sanora-neutral-25;
+}
+
+.testimoni-header {
+	@apply w-full max-w-360 mx-auto grid grid-cols-2 pb-16 opacity-0 will-change-transform;
+}
+
+.testimoni-header div h1 {
+	@apply font-newsreader text-testi-large italic pb-5;
+}
+
+.testimoni-header span {
+	@apply font-montreal font-medium text-testi-medium justify-self-end self-end;
+}
+
+.testimonial-wrapper-marquee {
+	@apply relative w-full overflow-hidden mask-[linear-gradient(to_right,transparent_0%,black_2.5%,black_98%,transparent_100%)] opacity-0 will-change-transform;
+}
+
+.marquee-track {
+	@apply flex gap-6 w-max animate-marquee hover:[animation-play-state:paused];
+}
+
+.testimoni-card {
+	@apply max-w-[34.73vw] min-w-[320px] aspect-square w-full h-full relative border-4 border-sanora-neutral-0 rounded-[20px] overflow-hidden shrink-0;
+}
+
+.testimoni-card .testimoni-wrapper-img {
+	@apply w-full h-full;
+}
+
+.testimoni-desc-container {
+	@apply absolute grid grid-rows-2 w-full h-full top-0 bottom-0;
+}
+
+.testimoni-desc-wrapper {
+	@apply row-start-2 self-end-safe flex flex-col gap-2.5 font-geist p-5 sm:p-6 w-full h-max;
+}
+
+.testimoni-quote-wrapper {
+	@apply relative pt-3;
+}
+
+.testimoni-quote-wrapper p {
+	@apply text-testi-small text-sanora-neutral-0 font-semibold leading-[110%] lg:leading-normal lg:tracking-wider relative z-10;
+}
+
+.testimoni-quote-wrapper p span {
+	@apply text-quote font-montreal font-medium text-sanora-neutral-0 absolute -top-6 sm:-top-8 -left-1 sm:-left-2 select-none pointer-events-none leading-none;
+}
+
+.testimoni-author-wrapper {
+	@apply w-full flex items-center justify-end gap-1.5;
+}
+
+.testimoni-author-wrapper hr {
+	@apply border-[0.5] border-sanora-neutral-200 w-5;
+}
+
+.testimoni-author-wrapper span {
+	@apply text-testi-extra-small font-normal text-sanora-neutral-0;
+}
+/* end Testimoni */
