@@ -2,11 +2,25 @@
 import Hero from '@/components/sections/Hero.astro';
 import Layout from '../layouts/Layout.astro';
 import About from '@/components/sections/About.astro';
+import Project from '@/components/sections/Project.astro'
+import PerspectiveTunnelProject from '@/components/ui/perspective-tunnel-project';
+import Services from '@/components/sections/Services.astro';
+import Quotes from '@/components/sections/Quotes.astro';
+import Contribute from '@/components/sections/Contribute.astro';
+import Testimoni from '@/components/sections/Testimoni.astro';
+import Footer from '@/components/Footer.astro';
 ---
 
 <Layout>
 	<Hero />
   <About />
+  <PerspectiveTunnelProject client:only="react" />
+  <Project />
+  <Services />
+  <Quotes/>
+  <Contribute />
+  <Testimoni />
+  <Footer />
 </Layout>
 
 <style>
