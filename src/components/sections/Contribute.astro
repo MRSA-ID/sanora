@@ -5,12 +5,12 @@ import { getGitHubContributions } from "@/lib/github";
 const contributions = await getGitHubContributions("MRSA-ID");
 ---
 
-<section id="contribute-container" class="contribute-container flex flex-col justify-start items-center min-h-[200svh] h-full w-full max-w-340 mx-auto px-4 sm:px-8 py-12 relative z-10 will-change-[filter,transform,opacity]">
- <div id="contribute-header" class="w-full text-sanora-blue-950 will-change-transform opacity-0">
-  <p class="font-geist text-sm font-normal uppercase tracking-wider">Github</p>
-  <h1 class="font-newsreader text-project-large italic leading-[120%]">Contributor</h1>
+<section id="contribute-container" class="contribute-container">
+ <div id="contribute-header" class="contribute-header">
+  <p class="contribute-label">Github</p>
+  <h1 class="contribute-title">Contributor</h1>
  </div>
- <div id="contribute-skyline-wrapper" class="w-full will-change-transform opacity-0">
+ <div id="contribute-skyline-wrapper" class="contribute-skyline-wrapper ">
   <ContributionSkyline 
     data={contributions.length > 0 ? contributions : undefined} 
     palette="sanora"

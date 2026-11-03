@@ -498,7 +498,7 @@ body.is-locked {
 }
 
 .services-title {
-	@apply font-newsreader text-project-large italic overflow-hidden mb-12 sm:mb-20;
+	@apply font-newsreader text-project-large leading-[120%] italic overflow-hidden mb-12 sm:mb-20;
 }
 
 .services-wrapper {
@@ -557,3 +557,24 @@ body.is-locked {
 	object-fit: cover;
 }
 /* end service */
+
+/* contribute */
+.contribute-container {
+	@apply flex flex-col justify-start items-center min-h-[200svh] h-full w-full max-w-340 mx-auto px-4 sm:px-8 py-12 relative z-10 will-change-[filter,transform,opacity];
+}
+
+.contribute-header {
+	@apply w-full text-sanora-blue-950 will-change-transform opacity-0;
+}
+
+.contribute-header .contribute-label {
+	@apply font-geist text-sm font-normal uppercase tracking-wider;
+}
+
+.contribute-header .contribute-title {
+	@apply font-newsreader text-project-large italic leading-[120%];
+}
+.contribute-skyline-wrapper {
+	@apply w-full will-change-transform opacity-0;
+}
+/* end contribute */
