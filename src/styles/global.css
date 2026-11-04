@@ -205,11 +205,11 @@ body.is-locked {
 }
 
 /* SplitText Container Masks */
-:global(.split-mask) {
+.split-mask {
 	@apply inline-block overflow-hidden align-bottom;
 }
 
-:global(.split-item) {
+.split-item {
 	@apply inline-block;
 	will-change: transform, opacity, filter;
 }
