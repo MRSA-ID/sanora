@@ -2,6 +2,8 @@
 import { ArrowUp } from '@lucide/astro';
 import HalftoneWordmark from '@components/ui/halftone-wordmark';
 import { footerContent } from '@/data/footer';
+
+const currentYear = new Date().getFullYear();
 ---
 
 <footer id="footer-reveal" class="footer-container">
@@ -59,7 +61,7 @@ import { footerContent } from '@/data/footer';
 
   <div class="footer-copyright">
    <div>
-    <p class="font-medium"><span>©</span>SNR 2026 <span>sanggisda@gmail.com</span></p>
+    <p class="font-medium"><span>©</span>SNR {currentYear} <span>sanggisda@gmail.com</span></p>
    </div>
    <span>DESIGNED WITH INTENTION.</span>
   </div>
