@@ -3,6 +3,22 @@
 import FloatingMenu from "@/components/ui/liquid-morph-floating-menu.tsx";
 import Preloader from "../modules/transitions/preloader/Preloader.astro";
 import "@styles/global.css";
+
+interface Props {
+  title?: string;
+  description?: string;
+  image?: string;
+}
+
+const {
+  title = "Sanora",
+  description = "Sanora is my creative engineering practice, where frontend development, visual design, interaction, and motion come together.",
+  image = "/og-image.png",
+} = Astro.props;
+
+// Absolute URLs required for social graph crawlers
+const canonicalURL = new URL(Astro.url.pathname, Astro.site || "https://sanora.dev");
+const ogImageURL = new URL(image, Astro.site || "https://sanora.dev");
 ---
 
 <!doctype html>
@@ -13,7 +29,28 @@ import "@styles/global.css";
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<link rel="icon" href="/favicon.ico" />
 		<meta name="generator" content={Astro.generator} />
-		<title>Sanora</title>
+
+		<!-- Primary Meta Tags -->
+		<title>{title}</title>
+		<meta name="title" content={title} />
+		<meta name="description" content={description} />
+		<link rel="canonical" href={canonicalURL} />
+
+		<!-- Open Graph / Facebook / LinkedIn -->
+		<meta property="og:type" content="website" />
+		<meta property="og:url" content={canonicalURL} />
+		<meta property="og:title" content={title} />
+		<meta property="og:description" content={description} />
+		<meta property="og:image" content={ogImageURL} />
+		<meta property="og:image:width" content="1200" />
+		<meta property="og:image:height" content="630" />
+
+		<!-- Twitter -->
+		<meta property="twitter:card" content="summary_large_image" />
+		<meta property="twitter:url" content={canonicalURL} />
+		<meta property="twitter:title" content={title} />
+		<meta property="twitter:description" content={description} />
+		<meta property="twitter:image" content={ogImageURL} />
 	</head>
 	<body>
 		<Preloader />
