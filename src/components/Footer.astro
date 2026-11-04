@@ -1,6 +1,6 @@
 ---
 import { ArrowUp } from '@lucide/astro';
-import HalftoneWordmark from '@components/ui/halftone-wordmark'
+import HalftoneWordmark from '@components/ui/halftone-wordmark';
 import { footerContent } from '@/data/footer';
 ---
 
@@ -84,9 +84,6 @@ import { footerContent } from '@/data/footer';
 
   gsap.registerPlugin(ScrollTrigger);
 
-  /**
-   * Helper function for smooth scrolling via Lenis or GSAP
-   */
   function smoothScrollTo(target: number | HTMLElement | string) {
     const lenis = (window as any).lenis;
     if (lenis) {
@@ -110,23 +107,20 @@ import { footerContent } from '@/data/footer';
   });
 
   // 2. Footer Internal Navigation Links Handler
-  const sectionIdMap: Record<string, string> = {
-    "#home": "#hero-container",
-    "#about": "#about-container",
-    "#project": "#project-container",
-    "#services": "#services-container",
-    "#testimonial": "#testimoni-container"
-  };
-
   document.querySelectorAll<HTMLAnchorElement>('.footer-nav-link').forEach((link) => {
     link.addEventListener('click', (e) => {
       const href = link.getAttribute('href');
       if (href && href.startsWith('#')) {
-        const mappedId = sectionIdMap[href] || href;
-        const targetEl = document.querySelector(mappedId);
-        if (targetEl) {
+        // Scroll to top (0) if link targets home or hero-container
+        if (href === "#home" || href === "#hero-container") {
           e.preventDefault();
-          smoothScrollTo(targetEl as HTMLElement);
+          smoothScrollTo(0);
+        } else {
+          const targetEl = document.querySelector(href);
+          if (targetEl) {
+            e.preventDefault();
+            smoothScrollTo(targetEl as HTMLElement);
+          }
         }
       }
     });

@@ -5,36 +5,45 @@ import { useState, useCallback, useRef, useEffect } from "react";
 import { motion } from "motion/react";
 import { MenuToggle } from "./menu-toggle";
 import { gsap } from "gsap";
+import { defaultMenuItems, type MenuItem } from "@/data/navigation";
+import { menuSocials, type SocialItem } from "@/data/socials";
 
 const ease = [0.22, 1, 0.36, 1] as const;
 const slowEase = [0.16, 1, 0.3, 1] as const;
 
-export interface MenuItem {
-	label: string;
-	targetId?: string;
-	onClick?: () => void;
-	href?: string;
-}
-
-export interface SocialItem {
-	label: string;
-	href: string;
-}
-
-interface FloatingMenuProps {
+export interface FloatingMenuProps {
 	items?: MenuItem[];
 	socials?: SocialItem[];
 }
 
+// src/components/ui/liquid-morph-floating-menu.tsx
+
 /**
  * Universal Smooth Scroll Helper
- * Uses Lenis smooth scroll if available, falling back to GSAP or native scrollIntoView
+ * Scroll to Y = 0 if target is hero-container, otherwise scroll to target element
  */
 function scrollToSection(targetId: string) {
+	const lenis = (window as any).lenis;
+
+	if (targetId === "hero-container" || targetId === "home") {
+		if (lenis) {
+			lenis.scrollTo(0, { duration: 1.2 });
+		} else {
+			gsap.to(window, {
+				duration: 1.2,
+				scrollTo: 0,
+				ease: "power3.inOut",
+				onError: () => {
+					window.scrollTo({ top: 0, behavior: "smooth" });
+				},
+			});
+		}
+		return;
+	}
+
 	const element = document.getElementById(targetId);
 	if (!element) return;
 
-	const lenis = (window as any).lenis;
 	if (lenis) {
 		lenis.scrollTo(element, { offset: 0, duration: 1.2 });
 	} else {
@@ -243,19 +252,8 @@ export default function FloatingMenu({ items, socials }: FloatingMenuProps) {
 	const [isOpen, setIsOpen] = useState(false);
 	const containerRef = useRef<HTMLDivElement>(null);
 
-	const menuItems: MenuItem[] = items ?? [
-		{ label: "Home", targetId: "hero-container" },
-		{ label: "About", targetId: "about-container" },
-		{ label: "Project", targetId: "project-container" },
-		{ label: "Services", targetId: "services-container" },
-		{ label: "People Say", targetId: "testimoni-container" },
-	];
-
-	const socialItems: SocialItem[] = socials ?? [
-		{ label: "Instagram", href: "https://www.instagram.com/snr66._/" },
-		{ label: "LinkedIn", href: "https://www.linkedin.com/in/ramadhansa/" },
-		{ label: "GitHub", href: "https://github.com/MRSA-ID" },
-	];
+	const menuItems: MenuItem[] = items ?? defaultMenuItems;
+	const socialItems: SocialItem[] = socials ?? menuSocials;
 
 	// Close on outside click
 	useEffect(() => {
@@ -292,7 +290,7 @@ export default function FloatingMenu({ items, socials }: FloatingMenuProps) {
 				}}
 				animate={{
 					width: isOpen ? 320 : 232,
-					height: isOpen ? 420 : 52,
+					height: isOpen ? 450 : 52,
 					borderRadius: 12,
 					scale: 1,
 				}}
@@ -397,7 +395,6 @@ export default function FloatingMenu({ items, socials }: FloatingMenuProps) {
 									if (item.targetId) {
 										scrollToSection(item.targetId);
 									}
-									item.onClick?.();
 									setIsOpen(false);
 								}}
 								isOpen={isOpen}
