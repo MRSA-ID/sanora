@@ -66,8 +66,9 @@ const ogImageURL = new URL(image, Astro.site || "https://sanora-dev.me");
 		<script>
 			import { initLenisSmoothScroll } from "@/lib/lenis";
 			import { gsap } from "gsap";
+			import { ScrollTrigger } from "gsap/ScrollTrigger";
 
-			// Initialize Lenis setup
+			// Initialize Lenis smooth scroll
 			initLenisSmoothScroll();
 
 			// Section Parallax Effects
@@ -89,6 +90,12 @@ const ogImageURL = new URL(image, Astro.site || "https://sanora-dev.me");
 							},
 						}
 					);
+				});
+
+				// Force initial trigger sorting & refresh once DOM elements are placed
+				requestAnimationFrame(() => {
+					ScrollTrigger.sort();
+					ScrollTrigger.refresh();
 				});
 			});
 		</script>

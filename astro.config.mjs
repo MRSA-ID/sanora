@@ -6,10 +6,13 @@ import tailwindcss from "@tailwindcss/vite";
 
 // https://astro.build/config
 export default defineConfig({
-	// 1. Production Site domain for canonical & OG absolute URLs
-	site: "https://sanora-dev.me",
+	// Explicitly target Static Site Generation (SSG / Static HTML)
+	output: "static",
 
-	// 2. HTML output minification & asset optimization
+	// Production Site domain for canonical & OG absolute URLs
+	site: "https://www.sanora-dev.me/",
+
+	// HTML output minification & asset optimization
 	compressHTML: true,
 
 	integrations: [react()],
@@ -35,14 +38,17 @@ export default defineConfig({
 					// Separate heavy 3D and animation libraries into vendor chunks
 					manualChunks(id) {
 						if (id.includes("node_modules")) {
+							if (id.includes("three") || id.includes("three-stdlib")) {
+								return "vendor-three";
+							}
 							if (
-								id.includes("three") ||
 								id.includes("@react-three") ||
-								id.includes("three-stdlib") ||
+								id.includes("shadergradient") ||
+								id.includes("@shadergradient") ||
 								id.includes("ogl") ||
 								id.includes("camera-controls")
 							) {
-								return "vendor-3d";
+								return "vendor-3d-tools";
 							}
 							if (
 								id.includes("gsap") ||

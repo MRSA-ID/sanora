@@ -6,18 +6,14 @@ import { ScrollToPlugin } from "gsap/ScrollToPlugin";
 
 gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
 
-// =========================================================================
-// 1. Easing Presets Configuration
-// =========================================================================
 export const EASING_PRESETS = {
-	smooth: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), // High-end exponential ease
-	gentle: (t: number) => 1 - Math.pow(1 - t, 3), // Soft cubic ease
-	snappy: (t: number) => 1 - Math.pow(1 - t, 4), // Fast responsive ease
-	linear: (t: number) => t, // Uniform motion
+	smooth: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+	gentle: (t: number) => 1 - Math.pow(1 - t, 3),
+	snappy: (t: number) => 1 - Math.pow(1 - t, 4),
+	linear: (t: number) => t,
 } as const;
 
 export function initLenisSmoothScroll(): Lenis | null {
-	// Respect reduced motion & fall back to native scroll below 768px
 	const prefersReducedMotion = window.matchMedia(
 		"(prefers-reduced-motion: reduce)",
 	).matches;
@@ -28,7 +24,6 @@ export function initLenisSmoothScroll(): Lenis | null {
 		return null;
 	}
 
-	// Initialize Lenis
 	const lenis = new Lenis({
 		duration: 1.2,
 		lerp: 0.085,
@@ -41,23 +36,49 @@ export function initLenisSmoothScroll(): Lenis | null {
 		syncTouch: false,
 	});
 
-	// Sync Lenis scroll with ScrollTrigger
-	lenis.on("scroll", ScrollTrigger.update);
+	// Synchronize Lenis scroll position with GSAP ScrollTrigger
+	lenis.on("scroll", () => {
+		ScrollTrigger.update();
+	});
 
-	// Sync Lenis RAF with GSAP Ticker for silky 60fps frame rate
+	// Sync Lenis RAF with GSAP Ticker for smooth 60fps execution
 	gsap.ticker.add((time) => {
 		lenis.raf(time * 1000);
 	});
 
-	// Disable GSAP lag smoothing to maintain continuous frame rate
 	gsap.ticker.lagSmoothing(0);
 
-	// Expose globally
 	(window as any).lenis = lenis;
 
-	// =========================================================================
-	// 2. Smart Smooth Anchor Link Interceptor
-	// =========================================================================
+	// Helper function for full ScrollTrigger layout recalculation
+	const refreshLayout = () => {
+		lenis.resize();
+		ScrollTrigger.sort();
+		ScrollTrigger.refresh();
+	};
+
+	// 1. Refresh when custom preloader animation completes
+	window.addEventListener("preloader-complete", () => {
+		requestAnimationFrame(() => {
+			refreshLayout();
+		});
+	});
+
+	// 2. Refresh when all images (including dynamic GIFs) finish downloading
+	window.addEventListener("load", () => {
+		requestAnimationFrame(() => {
+			refreshLayout();
+		});
+	});
+
+	// 3. Refresh when custom Web fonts finish loading & rendering
+	if (document.fonts) {
+		document.fonts.ready.then(() => {
+			refreshLayout();
+		});
+	}
+
+	// 4. Smart Smooth Anchor Link Interceptor
 	document.addEventListener("click", (e) => {
 		const target = e.target as HTMLElement;
 		const anchor = target.closest("a");
@@ -75,27 +96,20 @@ export function initLenisSmoothScroll(): Lenis | null {
 		}
 	});
 
-	// =========================================================================
-	// 3. Modal Scroll-Locking Observer
-	// =========================================================================
+	// 5. Modal Scroll-Locking Observer
 	const bodyObserver = new MutationObserver(() => {
 		const isLocked = document.body.classList.contains("is-locked");
 		if (isLocked) {
 			lenis.stop();
 		} else {
 			lenis.start();
+			refreshLayout();
 		}
 	});
 
 	bodyObserver.observe(document.body, {
 		attributes: true,
 		attributeFilter: ["class"],
-	});
-
-	// Resync Lenis measurements when preloader curtain finishes
-	window.addEventListener("preloader-complete", () => {
-		lenis.resize();
-		ScrollTrigger.refresh();
 	});
 
 	return lenis;
