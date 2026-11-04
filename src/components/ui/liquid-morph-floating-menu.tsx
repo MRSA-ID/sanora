@@ -4,12 +4,14 @@
 import { useState, useCallback, useRef, useEffect } from "react";
 import { motion } from "motion/react";
 import { MenuToggle } from "./menu-toggle";
+import { gsap } from "gsap";
 
 const ease = [0.22, 1, 0.36, 1] as const;
 const slowEase = [0.16, 1, 0.3, 1] as const;
 
 export interface MenuItem {
 	label: string;
+	targetId?: string;
 	onClick?: () => void;
 	href?: string;
 }
@@ -22,6 +24,29 @@ export interface SocialItem {
 interface FloatingMenuProps {
 	items?: MenuItem[];
 	socials?: SocialItem[];
+}
+
+/**
+ * Universal Smooth Scroll Helper
+ * Uses Lenis smooth scroll if available, falling back to GSAP or native scrollIntoView
+ */
+function scrollToSection(targetId: string) {
+	const element = document.getElementById(targetId);
+	if (!element) return;
+
+	const lenis = (window as any).lenis;
+	if (lenis) {
+		lenis.scrollTo(element, { offset: 0, duration: 1.2 });
+	} else {
+		gsap.to(window, {
+			duration: 1.2,
+			scrollTo: { y: element, offsetY: 0 },
+			ease: "power3.inOut",
+			onError: () => {
+				element.scrollIntoView({ behavior: "smooth" });
+			},
+		});
+	}
 }
 
 function MenuButton({
@@ -219,18 +244,11 @@ export default function FloatingMenu({ items, socials }: FloatingMenuProps) {
 	const containerRef = useRef<HTMLDivElement>(null);
 
 	const menuItems: MenuItem[] = items ?? [
-		{
-			label: "Home",
-			onClick: () => {
-				document
-					.getElementById("hero-container")
-					?.scrollIntoView({ behavior: "smooth" });
-			},
-		},
-		{ label: "About" },
-		{ label: "Project" },
-		{ label: "Services" },
-		{ label: "People Say" },
+		{ label: "Home", targetId: "hero-container" },
+		{ label: "About", targetId: "about-container" },
+		{ label: "Project", targetId: "project-container" },
+		{ label: "Services", targetId: "services-container" },
+		{ label: "People Say", targetId: "testimoni-container" },
 	];
 
 	const socialItems: SocialItem[] = socials ?? [
@@ -376,6 +394,9 @@ export default function FloatingMenu({ items, socials }: FloatingMenuProps) {
 								key={item.label}
 								label={item.label}
 								onClick={() => {
+									if (item.targetId) {
+										scrollToSection(item.targetId);
+									}
 									item.onClick?.();
 									setIsOpen(false);
 								}}

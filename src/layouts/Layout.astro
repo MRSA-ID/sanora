@@ -9,7 +9,7 @@ import "@styles/global.css";
 <html lang="en">
 	<head>
 		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<link rel="icon" href="/favicon.ico" />
 		<meta name="generator" content={Astro.generator} />
@@ -25,8 +25,9 @@ import "@styles/global.css";
 			import Lenis from "lenis";
 			import { gsap } from "gsap";
 			import { ScrollTrigger } from "gsap/ScrollTrigger";
+			import { ScrollToPlugin } from "gsap/ScrollToPlugin";
 
-			gsap.registerPlugin(ScrollTrigger);
+			gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
 
 			// Initialize Lenis Smooth Scroll
 			const lenis = new Lenis({
@@ -48,12 +49,17 @@ import "@styles/global.css";
 			// Disable GSAP lag smoothing to keep scroll animations fluid
 			gsap.ticker.lagSmoothing(0);
 
-			// Make lenis globally available if needed by other components
+			// Make lenis globally available
 			(window as any).lenis = lenis;
+
+			// Resync Lenis layout measurements when preloader animation finishes
+			window.addEventListener("preloader-complete", () => {
+				lenis.resize();
+				ScrollTrigger.refresh();
+			});
 
 			// Setup Section Parallax Effect
 			document.addEventListener("DOMContentLoaded", () => {
-				// Select sections that should have parallax depth
 				const parallaxSections = document.querySelectorAll(".parallax-section");
 
 				parallaxSections.forEach((section) => {

@@ -9,7 +9,7 @@ import { footerContent } from '@/data/footer';
  <div class="footer-marquee-wrapper">
   <div id="footer-marquee-track" class="footer-marquee-track">
    <!-- First Track -->
-   <div >
+   <div>
     <span>/ Get in touch</span>
     <span>/ Get in touch</span>
     <span>/ Get in touch</span>
@@ -27,17 +27,18 @@ import { footerContent } from '@/data/footer';
   <div class="footer-content-wrapper">
    <h2>The next good thing starts here</h2>
    {
-    footerContent.map((content,i)=>(
+    footerContent.map((content) => (
     <div class="footer-content">
      <h2>{content.title}</h2>
      <div class="footer-list">
-      {content.item.map((list,index)=>(
+      {content.item.map((list) => (
        list.link === null ? 
        <li class="opacity-80">{list.title}</li>
        :
        <li class="w-max">
          <a 
            href={list.link} 
+           class="footer-nav-link"
          >
            {list.title}
          </a>
@@ -50,7 +51,7 @@ import { footerContent } from '@/data/footer';
    <button 
     id="scroll-to-top"
     aria-label="Back to top"
-    class="group button-to-top "
+    class="group button-to-top"
    >
     <ArrowUp class='size-6 group-hover:animate-bounce transition-transform duration-300' />
    </button>
@@ -83,24 +84,59 @@ import { footerContent } from '@/data/footer';
 
   gsap.registerPlugin(ScrollTrigger);
 
+  /**
+   * Helper function for smooth scrolling via Lenis or GSAP
+   */
+  function smoothScrollTo(target: number | HTMLElement | string) {
+    const lenis = (window as any).lenis;
+    if (lenis) {
+      lenis.scrollTo(target, { offset: 0, duration: 1.2 });
+    } else {
+      const el = typeof target === 'string' ? document.querySelector(target) : target;
+      if (typeof target === 'number') {
+        gsap.to(window, { duration: 1.2, scrollTo: 0, ease: "power3.inOut" });
+      } else if (el) {
+        gsap.to(window, { duration: 1.2, scrollTo: { y: el }, ease: "power3.inOut" });
+      } else {
+        window.scrollTo({ top: typeof target === 'number' ? target : 0, behavior: 'smooth' });
+      }
+    }
+  }
+
   // 1. Scroll-to-Top Handler
   const scrollBtn = document.getElementById('scroll-to-top');
   scrollBtn?.addEventListener('click', () => {
-    if ((window as any).lenis) {
-      (window as any).lenis.scrollTo(0);
-    } else {
-      window.scrollTo({
-        top: 0,
-        behavior: 'smooth'
-      });
-    }
+    smoothScrollTo(0);
+  });
+
+  // 2. Footer Internal Navigation Links Handler
+  const sectionIdMap: Record<string, string> = {
+    "#home": "#hero-container",
+    "#about": "#about-container",
+    "#project": "#project-container",
+    "#services": "#services-container",
+    "#testimonial": "#testimoni-container"
+  };
+
+  document.querySelectorAll<HTMLAnchorElement>('.footer-nav-link').forEach((link) => {
+    link.addEventListener('click', (e) => {
+      const href = link.getAttribute('href');
+      if (href && href.startsWith('#')) {
+        const mappedId = sectionIdMap[href] || href;
+        const targetEl = document.querySelector(mappedId);
+        if (targetEl) {
+          e.preventDefault();
+          smoothScrollTo(targetEl as HTMLElement);
+        }
+      }
+    });
   });
 
   document.addEventListener("DOMContentLoaded", () => {
     const footer = document.getElementById("footer-reveal");
     const marqueeTrack = document.getElementById("footer-marquee-track");
 
-    // 2. Footer Curtain Reveal Animation
+    // 3. Footer Curtain Reveal Animation
     if (footer) {
       const prevSection = footer.previousElementSibling;
       if (prevSection) {
@@ -125,7 +161,7 @@ import { footerContent } from '@/data/footer';
       );
     }
 
-    // 3. Halftone Particle Reveal on Scroll (Full Viewport Trigger)
+    // 4. Halftone Particle Reveal on Scroll (Full Viewport Trigger)
     if (footer) {
       const state = { progress: 0 };
 
@@ -148,7 +184,7 @@ import { footerContent } from '@/data/footer';
       });
     }
 
-    // 4. Ultra-Smooth Low-Velocity Infinite Marquee
+    // 5. Ultra-Smooth Low-Velocity Infinite Marquee
     if (marqueeTrack) {
       let currentX = 0;
       let baseSpeed = 0.8;
