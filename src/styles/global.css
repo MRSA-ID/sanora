@@ -222,39 +222,6 @@ body.is-locked {
 	@apply inline-block;
 	will-change: transform, opacity, filter;
 }
-
-/* Debug Panel */
-.debug-panel {
-	@apply fixed bottom-5 right-5 z-[10000] bg-[#121218]/90 backdrop-blur-md border border-white/15 rounded-xl p-3.5 px-4 text-white font-sans flex flex-col gap-3 select-none shadow-2xl min-w-[260px];
-}
-
-.debug-header {
-	@apply text-xs uppercase tracking-widest text-slate-400 font-semibold;
-}
-
-.debug-scrubber {
-	@apply flex items-center gap-2 text-xs font-mono text-slate-300;
-}
-
-.debug-scrubber input[type="range"] {
-	@apply flex-1 accent-sky-400 cursor-pointer h-1.5 bg-white/20 rounded-lg;
-}
-
-.debug-actions {
-	@apply flex items-center gap-2.5;
-}
-
-.debug-btn {
-	@apply bg-white/10 border border-white/15 text-white py-1.5 px-3 rounded-md text-xs font-medium cursor-pointer transition-colors hover:bg-white/20;
-}
-
-.debug-btn.primary {
-	@apply bg-sky-400 text-slate-900 border-none hover:bg-sky-300;
-}
-
-.debug-toggle {
-	@apply flex items-center gap-1.5 text-xs text-slate-300 cursor-pointer ml-auto;
-}
 /* end preloader */
 
 /* hero */

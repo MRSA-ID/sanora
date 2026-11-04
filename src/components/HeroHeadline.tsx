@@ -1,13 +1,37 @@
 // src/components/HeroHeadline.tsx
 "use client";
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { LayoutGroup, motion } from "motion/react";
 import { TextRotate } from "@/components/ui/text-rotate";
 
 export default function HeroHeadline() {
+	const [ready, setReady] = useState(false);
+
+	useEffect(() => {
+		setReady(true);
+		const handlePreloaderComplete = () => {
+			setReady(false);
+			requestAnimationFrame(() => setReady(true));
+		};
+
+		window.addEventListener("preloader-complete", handlePreloaderComplete);
+		return () => {
+			window.removeEventListener("preloader-complete", handlePreloaderComplete);
+		};
+	}, []);
+
+	if (!ready) {
+		return (
+			<div
+				className="h-[1.2em] w-full"
+				aria-hidden="true"
+			/>
+		);
+	}
+
 	return (
-		<LayoutGroup>
+		<LayoutGroup id="hero-headline-group">
 			<motion.div
 				layout
 				className="inline-flex items-center justify-center flex-wrap"
@@ -24,7 +48,7 @@ export default function HeroHeadline() {
 						"Web Developer",
 						"Web Designer",
 					]}
-					mainClassName="text-sanora-blue-950  py-1.5! rounded-lg justify-center items-center overflow-hidden"
+					mainClassName="text-sanora-blue-950 py-1.5! rounded-lg justify-center items-center overflow-hidden"
 					staggerFrom="last"
 					initial={{ y: "100%", opacity: 0 }}
 					animate={{ y: 0, opacity: 1 }}

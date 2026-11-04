@@ -57,50 +57,65 @@ import DitherVeil from "@/components/ui/dither-veil";
     const heroSection = document.getElementById("hero-container");
     if (!heroSection) return;
 
-    // Single unified timeline: Pins Hero and scrubs internal drift + blur
-    const heroTl = gsap.timeline({
-      scrollTrigger: {
-        trigger: heroSection,
-        start: "top top",
-        end: "+=100%", // Hold pin for exactly 1 viewport height of scroll
-        pin: true,
-        pinSpacing: false, // Allows About section to slide continuously over Hero with no gap
-        scrub: true,
-        invalidateOnRefresh: true,
-      },
-    });
+    let heroTl: gsap.core.Timeline | null = null;
 
-    heroTl
-      .to(
-        ".hero-headline",
-        {
-          y: -180,
-          opacity: 0,
-          filter: "blur(20px)",
-          ease: "none",
+    function initHeroScroll() {
+      if (heroTl) heroTl.kill();
+
+      heroTl = gsap.timeline({
+        scrollTrigger: {
+          trigger: heroSection,
+          start: "top top",
+          end: "+=100%",
+          pin: true,
+          pinSpacing: false,
+          scrub: true,
+          invalidateOnRefresh: true,
         },
-        0
-      )
-      .to(
-        ".hero-image",
-        {
-          y: -100,
-          scale: 0.92,
-          opacity: 0,
-          filter: "blur(14px)",
-          ease: "none",
-        },
-        0
-      )
-      .to(
-        ".hero-bottom",
-        {
-          y: -120,
-          opacity: 0,
-          filter: "blur(10px)",
-          ease: "none",
-        },
-        0
-      );
+      });
+
+      heroTl
+        .to(
+          ".hero-headline",
+          {
+            y: -180,
+            opacity: 0,
+            filter: "blur(20px)",
+            ease: "none",
+          },
+          0
+        )
+        .to(
+          ".hero-image",
+          {
+            y: -100,
+            scale: 0.92,
+            opacity: 0,
+            filter: "blur(14px)",
+            ease: "none",
+          },
+          0
+        )
+        .to(
+          ".hero-bottom",
+          {
+            y: -120,
+            opacity: 0,
+            filter: "blur(10px)",
+            ease: "none",
+          },
+          0
+        );
+    }
+
+    initHeroScroll();
+
+    // Refresh ScrollTrigger and clear initial overrides when preloader finishes
+    window.addEventListener("preloader-complete", () => {
+      gsap.set(".hero-inner, .hero-headline, .hero-image, .hero-bottom", {
+        clearProps: "opacity,filter,transform",
+      });
+      ScrollTrigger.refresh();
+    });
   });
 </script>
