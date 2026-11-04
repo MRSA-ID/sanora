@@ -85,14 +85,12 @@
 	--text-footer-extra-small: clamp(12px, 1.11vw, 16px);
 	/* clamp(1.5rem, 8.6vw, 7.75rem) 124px */
 	/* clamp(2rem, 6.5vw, 6rem) 96px */
-	--color-sanora-blue-50: #f6f9ff;
 	--color-sanora-blue-100: #edf3ff;
 	--color-sanora-blue-200: #dce8ff;
 	--color-sanora-blue-300: #c4d8ff;
 	--color-sanora-blue-400: #9dbbff;
 	--color-sanora-blue-450: #5d7ab9;
 	--color-sanora-blue-500: #78a1ff;
-	--color-sanora-blue-600: #5a84ff;
 	--color-sanora-blue-700: #466ef2;
 	--color-sanora-blue-800: #3557cc;
 	--color-sanora-blue-900: #243b94;
@@ -102,15 +100,8 @@
 	--color-sanora-neutral-50: #fafaf8;
 	--color-sanora-neutral-100: #f7f8fb;
 	--color-sanora-neutral-200: #eef2f8;
-	--color-sanora-neutral-300: #e2e8f0;
 	--color-sanora-neutral-400: #cbd5e1;
-	--color-sanora-neutral-500: #a9b1c0;
-	--color-sanora-neutral-600: #6e7687;
-	--color-sanora-neutral-700: #4b5565;
-	--color-sanora-neutral-800: #2a2f3a;
-	--color-sanora-neutral-900: #1111;
 	--color-sanora-dark: #090a0e;
-	--color-sanora-dark-surface: #111216;
 }
 
 *,
@@ -724,3 +715,83 @@ body.is-locked {
 	@apply w-full absolute bottom-0 left-0;
 }
 /* end footer */
+
+/* ==========================================================================
+   Custom Scrollbar (Global & Container Variants)
+   ========================================================================== */
+
+/* 1. Global Browser Scrollbar */
+::-webkit-scrollbar {
+	width: 10px;
+	height: 10px;
+}
+
+::-webkit-scrollbar-track {
+	background-color: var(--color-sanora-neutral-100);
+	border-radius: 9999px;
+}
+
+::-webkit-scrollbar-thumb {
+	background-color: var(--color-sanora-blue-950);
+	border-radius: 9999px;
+	border: 2px solid var(--color-sanora-neutral-100);
+	transition: background-color 0.2s ease;
+}
+
+::-webkit-scrollbar-thumb:hover {
+	background-color: var(--color-sanora-blue-800);
+}
+
+/* Firefox Support */
+* {
+	scrollbar-width: thin;
+	scrollbar-color: var(--color-sanora-blue-950) var(--color-sanora-neutral-100);
+}
+
+/* 2. Utility Class: Filled Scrollbar */
+.scrollbar-filled::-webkit-scrollbar {
+	width: 8px;
+	height: 8px;
+}
+
+.scrollbar-filled::-webkit-scrollbar-track {
+	background-color: rgba(1, 41, 176, 0.08);
+	border-radius: 9999px;
+}
+
+.scrollbar-filled::-webkit-scrollbar-thumb {
+	background-color: var(--color-sanora-blue-950);
+	border-radius: 9999px;
+	border: 2px solid transparent;
+	-webkit-background-clip: content-box;
+	background-clip: content-box;
+}
+
+.scrollbar-filled::-webkit-scrollbar-thumb:hover {
+	background-color: var(--color-sanora-blue-800);
+}
+
+/* 3. Utility Class: Ghost Scrollbar */
+.scrollbar-ghost::-webkit-scrollbar {
+	width: 6px;
+	height: 6px;
+}
+
+.scrollbar-ghost::-webkit-scrollbar-track {
+	background-color: transparent;
+}
+
+.scrollbar-ghost::-webkit-scrollbar-thumb {
+	background-color: var(--color-sanora-blue-950);
+	border-radius: 9999px;
+	transition: background-color 0.2s ease;
+}
+
+.scrollbar-ghost::-webkit-scrollbar-thumb:hover {
+	background-color: var(--color-sanora-blue-800);
+}
+
+.scrollbar-ghost {
+	scrollbar-width: thin;
+	scrollbar-color: var(--color-sanora-blue-950) transparent;
+}
