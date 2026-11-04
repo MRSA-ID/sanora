@@ -16,9 +16,8 @@ const {
   image = "/og-image.png",
 } = Astro.props;
 
-// Absolute URLs required for social graph crawlers
-const canonicalURL = new URL(Astro.url.pathname, Astro.site || "https://sanora.dev");
-const ogImageURL = new URL(image, Astro.site || "https://sanora.dev");
+const canonicalURL = new URL(Astro.url.pathname, Astro.site || "https://sanora-dev.me");
+const ogImageURL = new URL(image, Astro.site || "https://sanora-dev.me");
 ---
 
 <!doctype html>
@@ -63,50 +62,19 @@ const ogImageURL = new URL(image, Astro.site || "https://sanora.dev");
 		<main id="main-content">
 			<slot />
 		</main>
+
 		<script>
-			import Lenis from "lenis";
+			import { initLenisSmoothScroll } from "@/lib/lenis";
 			import { gsap } from "gsap";
-			import { ScrollTrigger } from "gsap/ScrollTrigger";
-			import { ScrollToPlugin } from "gsap/ScrollToPlugin";
 
-			gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
+			// Initialize Lenis setup
+			initLenisSmoothScroll();
 
-			// Initialize Lenis Smooth Scroll
-			const lenis = new Lenis({
-				duration: 1.2,
-				easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), // Smooth exponential ease
-				smoothWheel: true,
-				wheelMultiplier: 1.0,
-				touchMultiplier: 1.5,
-			});
-
-			// Synchronize Lenis scroll positions with GSAP ScrollTrigger
-			lenis.on("scroll", ScrollTrigger.update);
-
-			// Feed Lenis requestAnimationFrame time into GSAP Ticker
-			gsap.ticker.add((time) => {
-				lenis.raf(time * 1000);
-			});
-
-			// Disable GSAP lag smoothing to keep scroll animations fluid
-			gsap.ticker.lagSmoothing(0);
-
-			// Make lenis globally available
-			(window as any).lenis = lenis;
-
-			// Resync Lenis layout measurements when preloader animation finishes
-			window.addEventListener("preloader-complete", () => {
-				lenis.resize();
-				ScrollTrigger.refresh();
-			});
-
-			// Setup Section Parallax Effect
+			// Section Parallax Effects
 			document.addEventListener("DOMContentLoaded", () => {
 				const parallaxSections = document.querySelectorAll(".parallax-section");
-
 				parallaxSections.forEach((section) => {
 					const innerContent = section.querySelector(".parallax-inner") || section;
-					
 					gsap.fromTo(
 						innerContent,
 						{ y: -50 },
@@ -129,7 +97,6 @@ const ogImageURL = new URL(image, Astro.site || "https://sanora.dev");
 
 <style>
 	html {
-		/* Lenis required smooth scroll root styles */
 		scroll-behavior: initial;
 	}
 
@@ -142,7 +109,9 @@ const ogImageURL = new URL(image, Astro.site || "https://sanora.dev");
 		scroll-behavior: auto !important;
 	}
 
-	.lenis.lenis-smooth [data-lenis-prevent] {
+	.lenis.lenis-smooth [data-lenis-prevent],
+	.scrollbar-filled,
+	.scrollbar-ghost {
 		overscroll-behavior: contain;
 	}
 
